@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { logout } from '../../feature/auth/authSlice';
+import { FiShoppingCart } from 'react-icons/fi';
+import { CiHeart } from 'react-icons/ci';
+import { IoPersonOutline } from 'react-icons/io5';
 
 const Navbar: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -14,48 +17,21 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-blue-600 text-white shadow-lg">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center py-4">
-          <Link to="/" className="text-2xl font-bold">
-            E-Shop
+    <nav className="bg-white text-black shadow-lg">
+      <div className="container mx-auto px-1">
+        <div className="flex justify-between items-center ">
+          <Link to="/" className="">
+            <div className="flex items-center">
+              {' '}
+              <img src="/assets/logo.png" className="" alt="" />
+              <div className="flex flex-col">
+                <h1 className="text-2xl font-bold">Tteokbokki</h1>
+                <p>A Treasure of Tastes</p>
+              </div>
+            </div>
           </Link>
 
-          <div className="flex items-center space-x-6">
-            <Link to="/" className="hover:text-blue-200">
-              Home
-            </Link>
-            <Link to="/products" className="hover:text-blue-200">
-              Products
-            </Link>
-            <Link to="/blog" className="hover:text-blue-200">
-              Blog
-            </Link>
-            <Link to="/about" className="hover:text-blue-200">
-              About
-            </Link>
-            <Link to="/faq" className="hover:text-blue-200">
-              FAQ
-            </Link>
-          </div>
-
           <div className="flex items-center space-x-4">
-            <Link to="/wishlist" className="hover:text-blue-200 relative">
-              ❤️
-              {wishlistItems.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                  {wishlistItems.length}
-                </span>
-              )}
-            </Link>
-            <Link to="/cart" className="hover:text-blue-200 relative">
-              🛒
-              {cartItems.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                  {cartItems.length}
-                </span>
-              )}
-            </Link>
             {isAuthenticated ? (
               <>
                 <span className="text-sm">Hello, {user?.name}</span>
@@ -65,9 +41,38 @@ const Navbar: React.FC = () => {
               </>
             ) : (
               <Link to="/login" className="hover:text-blue-200">
-                Login
+                <div className="flex items-center gap-1">
+                  <IoPersonOutline />
+                  <p className="text-sm font-medium">Account</p>
+                </div>
               </Link>
             )}
+            <Link to="/wishlist" className="hover:text-blue-200 ">
+              <div className="flex items-center gap-1 text-sm ">
+                <div className="relative">
+                  <CiHeart />
+                  {wishlistItems.length > 0 && (
+                    <span className="absolute -top-2 -right-1 bg-red-500 text-white text-xs rounded-full h-3 w-3 flex items-center justify-center">
+                      {wishlistItems.length}
+                    </span>
+                  )}
+                </div>
+                <p>Wishlist</p>
+              </div>
+            </Link>
+            <Link to="/cart" className="hover:text-blue-200 ">
+              <div className="flex items-center gap-1 text-sm">
+                <div className="relative">
+                  <FiShoppingCart />
+                  {cartItems.length > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-3 w-3 flex items-center justify-center">
+                      {cartItems.length}
+                    </span>
+                  )}
+                </div>
+                <p>Cart</p>
+              </div>
+            </Link>
           </div>
         </div>
       </div>
