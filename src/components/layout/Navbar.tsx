@@ -21,20 +21,13 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto px-1">
         <div className="flex justify-between items-center ">
           <Link to="/" className="">
-            <div className="flex items-center">
-              {' '}
-              <img src="/assets/logo.png" className="" alt="" />
-              <div className="flex flex-col">
-                <h1 className="text-2xl font-bold">Tteokbokki</h1>
-                <p>A Treasure of Tastes</p>
-              </div>
-            </div>
+            <img src="/assets/ui/navbar_logo.png" alt="navbar_logo" />
           </Link>
 
           <div className="flex items-center space-x-4">
             {isAuthenticated ? (
               <>
-                <span className="text-sm">Hello, {user?.name}</span>
+                <span className="text-sm">{user?.name}</span>
                 <button onClick={handleLogout} className="hover:text-blue-200">
                   Logout
                 </button>
