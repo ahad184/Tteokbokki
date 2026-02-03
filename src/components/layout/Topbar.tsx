@@ -7,7 +7,7 @@ const Topbar: FC = () => {
     <div className="bg-white text-black text-[14px] font-medium drop-shadow-lg ">
       <div className="container mx-auto flex justify-between items-center py-2 px-4">
         <div className="border p-1 rounded">
-          <img src="/assets/topbarIcon.png" alt="Icon" />
+          <img src="/assets/ui/Icon.png" alt="Icon" />
         </div>
         <div className="flex items-center space-x-6">
           <Link to="/" className="hover:text-blue-200">
