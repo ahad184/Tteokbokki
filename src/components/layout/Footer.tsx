@@ -9,6 +9,7 @@ const Footer: React.FC = () => {
     '/assets/footer/img_2 (1).png',
     '/assets/footer/img_3 (1).png',
     '/assets/footer/img_4 (1).png',
+    '/assets/footer/img_5.png',
   ];
   return (
     <div>
@@ -162,7 +163,7 @@ const Footer: React.FC = () => {
   {thumbs.map((src, idx) => (
     <div
       key={idx}
-      className="h-9 w-9 rounded-md bg-cover bg-center"
+      className="h-10 w-20 rounded-md bg-cover bg-center"
       style={{ backgroundImage: `url("${src}")` }}
     />
                 ))}
@@ -170,8 +171,8 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          <div className="mt-8 border-t border-[#2a2d31] pt-4 text-center text-[11px] text-slate-500">
-            © 2025 <span className="font-semibold text-[#ff4c3b]">foodzy</span>,
+          <div className="mt-8 border-t border-[#7777] pt-4 text-center text-[11px] text-slate-500">
+            © 2026 <span className="font-semibold text-[#ff4c3b]">foodzy</span>,
             All rights reserved.
           </div>
         </div>
