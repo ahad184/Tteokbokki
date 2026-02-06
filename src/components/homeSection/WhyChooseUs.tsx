@@ -6,8 +6,8 @@ const WhyChooseUs = () => {
   const { features } = HomePageData.chooseus;
 
   return (
-    <Wrapper className="py-16 px-4 sm:px-8 lg:px-14">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+    <Wrapper className="max-w-7xl mx-auto py-16 px-4 sm:px-8 md:px-12 lg:px-14">
+      <div className="grid grid-cols-1 lg:grid-cols-2 items-start">
         {/* Left Section - Image */}
         <div className="relative flex justify-center">
           <div className="relative rounded-2xl overflow-hidden max-w-md w-full">

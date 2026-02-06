@@ -1,11 +1,11 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { logout } from "../../feature/auth/authSlice";
-import { FiShoppingCart } from "react-icons/fi";
-import { CiHeart } from "react-icons/ci";
-import { IoPersonOutline } from "react-icons/io5";
-import { CiSearch } from "react-icons/ci";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { logout } from '../../feature/auth/authSlice';
+import { FiShoppingCart } from 'react-icons/fi';
+import { CiHeart } from 'react-icons/ci';
+import { IoPersonOutline } from 'react-icons/io5';
+import { CiSearch } from 'react-icons/ci';
 
 const Navbar: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -29,8 +29,6 @@ const Navbar: React.FC = () => {
 
           <div className="flex flex-1 justify-center">
             <div className="flex w-full max-w-2xl items-stretch overflow-hidden rounded border border-slate-300 bg-white">
-              {/* <div className="order-3 mt-2 flex w-full items-center justify-center sm:order-none sm:mt-0 sm:flex-1">
-            <div className="flex w-full max-w-lg items-stretch overflow-hidden  border border-slate-200 bg-slate-50 text-xs shadow-sm"> */}
               <input
                 type="text"
                 placeholder="Search for items..."
