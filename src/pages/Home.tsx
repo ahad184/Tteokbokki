@@ -5,6 +5,7 @@ import WhyChooseUs from '../components/homeSection/WhyChooseUs';
 import NewsletterFeatures from '../components/homeSection/Newletter';
 import DailyBestSells from '../components/homeSection/DailyBestSales';
 import StandoutDishes from '../components/homeSection/StandoutDishes';
+import DealsOfTheDay from '../components/homeSection/DealoftheDay';
 
 const Home: React.FC = () => {
   return (
@@ -18,6 +19,8 @@ const Home: React.FC = () => {
       <DailyBestSells />
       {/* StandoutDishes */}
       <StandoutDishes />
+      {/* Deal of the Day  */}
+      <DealsOfTheDay />
       {/* Why Choose US  */}
       <WhyChooseUs />
       {/* New letter */}

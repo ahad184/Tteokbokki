@@ -16,7 +16,7 @@ const NewsletterFeatures = () => {
     <section className="w-full ">
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-12 md:py-16 space-y-10">
         {/* HERO / Newsletter Section */}
-        <div className="relative bg-black rounded-3xl overflow-hidden shadow-2xl  ">
+        <div className="relative bg-black rounded-3xl overflow-hidden   ">
           <div className="relative bg-black grid grid-cols-1 lg:grid-cols-2 gap-10 items-start pt-8 px-8 md:px-12 md:pt-12">
             {/* Left Section */}
             <div className="space-y-6 z-10 font-quicksand">
