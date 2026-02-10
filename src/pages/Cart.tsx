@@ -1,130 +1,154 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { removeFromCart, updateQuantity } from '../feature/cart/cartSlice';
-import Button from '../components/ui/Button';
-import Card from '../components/ui/Card';
+import React from "react";
+import { FiTrash2 } from "react-icons/fi";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "../app/hooks";
+import { removeFromCart, updateQuantity } from "../feature/cart/cartSlice";
+import Button from "../components/ui/Button";
+import PopularProducts from "../components/ui/PopularProducts";
+
+const money = (n: number) => `$${Number(n).toFixed(2)}`;
+
+// Define the type for PopularProduct
 
 const Cart: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { items, total } = useAppSelector((state) => state.cart);
+  const { items } = useAppSelector((state) => state.cart);
 
-  const handleRemove = (id: string) => {
-    dispatch(removeFromCart(id));
-  };
+  const handleRemove = (id: string) => dispatch(removeFromCart(id));
 
-  const handleQuantityChange = (id: string, quantity: number) => {
+  const setQty = (id: string, quantity: number) => {
     dispatch(updateQuantity({ id, quantity }));
   };
 
   if (items.length === 0) {
     return (
-      <div className="container mx-auto px-4 py-16 text-center">
-        <h2 className="text-3xl font-bold mb-4">Your Cart is Empty</h2>
-        <p className="text-gray-600 mb-8">Add some products to get started!</p>
-        <Link to="/products">
-          <Button>Shop Now</Button>
-        </Link>
+      <div className="min-h-screen bg-[#fafafa] text-slate-800">
+        <div className="container mx-auto px-4 py-16 text-center">
+          <h2 className="text-3xl font-bold mb-4">Your Cart is Empty</h2>
+          <p className="text-gray-600 mb-8">
+            Add some products to get started!
+          </p>
+          <Link to="/products">
+            <Button>Shop Now</Button>
+          </Link>
+
+          <div className="mt-16 text-left"></div>
+        </div>
+        <PopularProducts />
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8">Shopping Cart</h1>
+    <div className="min-h-screen bg-[#fafafa] text-slate-800">
+      <div className="w-full bg-[#ff4c3b] text-white">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 text-sm lg:px-0">
+          <span>Cart</span>
+          <span className="text-xs opacity-90">
+            Home <span className="mx-1">/</span> Cart
+          </span>
+        </div>
+      </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Cart Items */}
-        <div className="lg:col-span-2 space-y-4">
-          {items.map((item) => (
-            <Card key={item.id}>
-              <div className="p-4 flex gap-4">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-24 h-24 object-cover rounded"
-                />
-                <div className="flex-1">
-                  <h3 className="font-semibold text-lg mb-1">{item.name}</h3>
-                  <p className="text-gray-600 text-sm mb-2">{item.category}</p>
-                  <p className="text-blue-600 font-bold">${item.price}</p>
+      <div className="mx-auto max-w-6xl px-4 py-10 lg:px-0">
+        <div className="overflow-hidden rounded-md border border-slate-200 bg-white">
+          <div className="grid grid-cols-[2.2fr_1fr_1fr_1fr_0.6fr] bg-slate-100 px-6 py-4 text-sm font-semibold text-slate-700">
+            <div>Product</div>
+            <div className="text-center">Price</div>
+            <div className="text-center">Quantity</div>
+            <div className="text-center">Total</div>
+            <div className="text-right">Action</div>
+          </div>
+
+          <div>
+            {items.map((item) => (
+              <div
+                key={item.id}
+                className="grid grid-cols-[2.2fr_1fr_1fr_1fr_0.6fr] items-center px-6 py-6"
+              >
+                <div className="flex items-center gap-6">
+                  <div className="h-16 w-16 overflow-hidden rounded-md border border-slate-200 bg-white">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                  <p className="truncate text-sm font-medium text-slate-700">
+                    {item.name}
+                  </p>
                 </div>
-                <div className="flex flex-col items-end justify-between">
-                  <button
-                    onClick={() => handleRemove(item.id)}
-                    className="text-red-500 hover:text-red-700"
-                  >
-                    Remove
-                  </button>
-                  <div className="flex items-center border rounded">
+
+                <div className="text-center text-sm text-slate-700">
+                  {money(item.price)}
+                </div>
+
+                <div className="flex justify-center">
+                  <div className="flex items-center overflow-hidden rounded-md border border-slate-200 bg-white">
                     <button
-                      onClick={() =>
-                        handleQuantityChange(item.id, item.quantity - 1)
-                      }
-                      className="px-3 py-1 hover:bg-gray-100"
-                    >
-                      -
-                    </button>
-                    <span className="px-4 py-1 border-x">{item.quantity}</span>
-                    <button
-                      onClick={() =>
-                        handleQuantityChange(item.id, item.quantity + 1)
-                      }
-                      className="px-3 py-1 hover:bg-gray-100"
+                      type="button"
+                      onClick={() => setQty(item.id, item.quantity + 1)}
+                      className="px-3 py-2 text-sm hover:bg-slate-50"
+                      aria-label="Increase quantity"
                     >
                       +
                     </button>
+
+                    <span className="min-w-10 px-3 text-center text-sm">
+                      {item.quantity}
+                    </span>
+
+                    <button
+                      type="button"
+                      onClick={() => setQty(item.id, item.quantity - 1)}
+                      className="px-3 py-2 text-sm hover:bg-slate-50"
+                      aria-label="Decrease quantity"
+                    >
+                      -
+                    </button>
                   </div>
                 </div>
+
+                {/* Total */}
+                <div className="text-center text-sm text-slate-700">
+                  {money(Number(item.price) * item.quantity)}
+                </div>
+
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => handleRemove(item.id)}
+                    className="text-slate-600 hover:text-[#ff4c3b]"
+                    aria-label="Remove item"
+                  >
+                    <FiTrash2 className="text-lg" />
+                  </button>
+                </div>
               </div>
-            </Card>
-          ))}
+            ))}
+          </div>
         </div>
 
-        {/* Order Summary */}
-        <div>
-          <Card>
-            <div className="p-6">
-              <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
+        <div className="mt-8 flex items-center justify-between">
+          <Link
+            to="/products"
+            className="text-sm text-slate-600 underline hover:text-slate-800"
+          >
+            Continue Shopping
+          </Link>
 
-              <div className="space-y-2 mb-4">
-                <div className="flex justify-between">
-                  <span>Subtotal</span>
-                  <span>${total.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Shipping</span>
-                  <span>Free</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Tax</span>
-                  <span>${(total * 0.1).toFixed(2)}</span>
-                </div>
-              </div>
+          <button
+            type="button"
+            onClick={() => navigate("/checkout")}
+            className="rounded-md bg-[#ff4c3b] px-10 py-3 text-sm font-semibold text-white hover:bg-[#e63f2f]"
+          >
+            Check Out
+          </button>
+        </div>
 
-              <div className="border-t pt-4 mb-6">
-                <div className="flex justify-between text-xl font-bold">
-                  <span>Total</span>
-                  <span>${(total * 1.1).toFixed(2)}</span>
-                </div>
-              </div>
-
-              <Button
-                className="w-full"
-                size="lg"
-                onClick={() => navigate('/checkout')}
-              >
-                Proceed to Checkout
-              </Button>
-
-              <Link to="/products">
-                <Button variant="outline" className="w-full mt-3">
-                  Continue Shopping
-                </Button>
-              </Link>
-            </div>
-          </Card>
+        <div className="mt-16">
+          <PopularProducts />
         </div>
       </div>
     </div>

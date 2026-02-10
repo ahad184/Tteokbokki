@@ -6,7 +6,7 @@ const AboutUs: React.FC = () => {
     <div className="min-h-screen flex flex-col bg-[#fafafa] text-slate-800">
 
       {/* Red banner / breadcrumb */}
-      <div className="w-full bg-[#ff4c3b] text-white">
+      <div className="w-full bg-red-600 text-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 text-sm lg:px-0">
           <span>About Us</span>
           <span className="text-xs opacity-90">
