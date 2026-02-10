@@ -1,48 +1,46 @@
 import React, { useState } from "react";
-import Card from "../components/ui/Card";
-
-const faqs = [
-  {
-    question: "What is your shipping policy?",
-    answer:
-      "We offer free shipping on all orders over $50. Standard shipping takes 5-7 business days, while express shipping takes 2-3 business days.",
-  },
-  {
-    question: "How can I track my order?",
-    answer:
-      "Once your order ships, you will receive a tracking number via email. You can use this number to track your package on our website or the carrier's website.",
-  },
-  {
-    question: "What is your return policy?",
-    answer:
-      "We accept returns within 30 days of purchase. Items must be unused and in their original packaging. Please contact our customer service to initiate a return.",
-  },
-  {
-    question: "Do you ship internationally?",
-    answer:
-      "Yes, we ship to most countries worldwide. International shipping costs and delivery times vary by location.",
-  },
-  {
-    question: "What payment methods do you accept?",
-    answer:
-      "We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and Apple Pay.",
-  },
-  {
-    question: "How do I cancel my order?",
-    answer:
-      "Orders can be cancelled within 1 hour of placement. Please contact our customer service immediately if you need to cancel an order.",
-  },
-];
 
 const Faq: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const toggleFaq = (index: number) => {
+  const toggleOpen = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  const questions = [
+    {
+      question: "What Facilities Does Your Hotel Have?",
+      answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+    },
+    {
+      question: "How Do I Book A Room For My Vacation?",
+      answer: "Booking a room can be done online or by calling...",
+    },
+    {
+      question: "How Are We best among others?",
+      answer: "We offer unmatched customer service...",
+    },
+    {
+      question: "Is There Any Fitness Center In Your Hotel?",
+      answer: "Yes, we have a fully equipped gym available for guests...",
+    },
+    {
+      question: "What Type Of Room Service Do You Offer?",
+      answer: "Room service includes breakfast, dinner, and snacks...",
+    },
+    {
+      question: "What Type Of Room Service Do You Offer?",
+      answer: "Room service includes breakfast, dinner, and snacks...",
+    },
+    {
+      question: "What Type Of Room Service Do You Offer?",
+      answer: "Room service includes breakfast, dinner, and snacks...",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-white text-slate-800">
+      {/* Header Section */}
       <div className="w-full bg-[#ff4c3b] text-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 text-sm lg:px-0">
           <span>Faq</span>
@@ -52,43 +50,41 @@ const Faq: React.FC = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold mb-4 text-center">
-          Frequently Asked Questions
-        </h1>
-        <p className="text-gray-600 text-center mb-12">
-          Find answers to common questions about our products and services
-        </p>
-
-        <div className="max-w-3xl mx-auto space-y-4">
-          {faqs.map((faq, index) => (
-            <Card key={index}>
-              <button
-                onClick={() => toggleFaq(index)}
-                className="w-full p-6 text-left flex justify-between items-center hover:bg-gray-50"
-              >
-                <h3 className="font-semibold text-lg pr-4">{faq.question}</h3>
-                <span className="text-2xl text-blue-600">
-                  {openIndex === index ? "−" : "+"}
-                </span>
-              </button>
-              {openIndex === index && (
-                <div className="px-6 pb-6">
-                  <p className="text-gray-600">{faq.answer}</p>
-                </div>
-              )}
-            </Card>
-          ))}
+      {/* Main Content */}
+      <div className="mx-auto max-w-6xl px-4 py-10 lg:px-0 grid grid-cols-1 sm:grid-cols-2 gap-8">
+        {/* Image Section */}
+        <div className="w-full p-4 flex-shrink-0">
+          <img
+            src="./assets/Faq/text.png"
+            alt="Hotel facilities"
+            className="w-full h-auto rounded-lg shadow-lg object-cover"
+          />
         </div>
 
-        <div className="mt-12 text-center">
-          <p className="text-gray-600 mb-4">Still have questions?</p>
-          <a
-            href="mailto:support@eshop.com"
-            className="text-blue-600 hover:underline font-semibold"
-          >
-            Contact our support team
-          </a>
+        {/* FAQ Section */}
+        <div className="w-full p-4">
+          <div className="space-y-6">
+            {questions.map((item, index) => (
+              <div key={index} className="border-b-2 pb-4">
+                <div
+                  className="text-lg font-semibold cursor-pointer flex justify-between items-center"
+                  onClick={() => toggleOpen(index)}
+                >
+                  <span>{item.question}</span>
+                  <span
+                    className={`transform transition-transform ${openIndex === index ? "rotate-180" : ""}`}
+                  >
+                    &#x25BC;
+                  </span>
+                </div>
+                {openIndex === index && (
+                  <div className="mt-2 text-gray-700 text-sm">
+                    {item.answer}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
