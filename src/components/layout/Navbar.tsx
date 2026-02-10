@@ -1,10 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { logout } from '../../feature/auth/authSlice';
-import { FiShoppingCart } from 'react-icons/fi';
-import { CiHeart } from 'react-icons/ci';
-import { IoPersonOutline } from 'react-icons/io5';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { logout } from "../../feature/auth/authSlice";
+import { FiShoppingCart } from "react-icons/fi";
+import { CiHeart } from "react-icons/ci";
+import { IoPersonOutline } from "react-icons/io5";
+import { CiSearch } from "react-icons/ci";
 
 const Navbar: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -18,12 +19,33 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="bg-white text-black shadow-lg">
-      <div className="container mx-auto px-1">
-        <div className="flex justify-between items-center ">
+      <div>
+        <div className="mx-auto flex max-w-6xl items-center justify-between  py-4">
+          {/* <div className="mx-auto max-w-8xl px-8">
+        <div className="flex items-center justify-between gap-6 py-3"> */}
           <Link to="/" className="">
             <img src="/assets/ui/navbar_logo.png" alt="navbar_logo" />
           </Link>
 
+          <div className="flex flex-1 justify-center">
+            <div className="flex w-full max-w-2xl items-stretch overflow-hidden rounded border border-green-600 bg-white">
+
+              <input
+                type="text"
+                placeholder="Search for items..."
+                className="flex-1 bg-slate-50 px-4 py-2.5 text-xs text-slate-700 outline-none placeholder:text-slate-400"
+              />
+              <select className="hidden border-l border-green-600 bg-white px-3 text-xs text-slate-600 outline-none sm:block">
+                <option>All Categories</option>
+                <option>Fruits &amp; Vegetables</option>
+                <option>Dairy &amp; Bakery</option>
+                <option>Meat &amp; Seafood</option>
+              </select>
+              <button className="bg-[#000000] px-4  w-[45px] h-[45px ] outline-black text-white hover:bg-[#e63f2f]">
+                <CiSearch />
+              </button>
+            </div>
+          </div>
           <div className="flex items-center space-x-4">
             {isAuthenticated ? (
               <>
