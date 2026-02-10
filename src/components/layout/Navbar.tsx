@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="bg-white text-black shadow-lg">
-      <div>
+      <div className="border-b-2 border-red-500">
         <div className="mx-auto flex max-w-6xl items-center justify-between  py-4">
           {/* <div className="mx-auto max-w-8xl px-8">
         <div className="flex items-center justify-between gap-6 py-3"> */}
@@ -28,20 +28,20 @@ const Navbar: React.FC = () => {
           </Link>
 
           <div className="flex flex-1 justify-center">
-            <div className="flex w-full max-w-2xl items-stretch overflow-hidden rounded border border-green-600 bg-white">
+            <div className="flex w-full max-w-2xl items-stretch overflow-hidden rounded border border-slate-300 bg-white">
               <input
                 type="text"
                 placeholder="Search for items..."
                 className="flex-1 bg-slate-50 px-4 py-2.5 text-xs text-slate-700 outline-none placeholder:text-slate-400"
               />
-              <select className="hidden border-l border-green-600 bg-white px-3 text-xs text-slate-600 outline-none sm:block">
+              <select className="hidden border-l border-slate-200 bg-white px-3 text-xs text-slate-600 outline-none sm:block">
                 <option>All Categories</option>
                 <option>Fruits &amp; Vegetables</option>
                 <option>Dairy &amp; Bakery</option>
                 <option>Meat &amp; Seafood</option>
               </select>
-              <button className="bg-[#000000] px-4  w-[45px] h-[45px ] outline-black text-white hover:bg-[#e63f2f]">
-                <CiSearch />
+              <button className="bg-[#ff4c3b] px-4 text-xs font-semibold text-white hover:bg-[#e63f2f]">
+                <CiSearch className="font-bold" />
               </button>
             </div>
           </div>
