@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
-import { addToWishlist } from '../../feature/wishlist/wishlistSlice';
+import { toggleWishlist } from '../../feature/wishlist/wishlistSlice';
 import { FaHeart } from 'react-icons/fa';
 import { FaRegHeart } from 'react-icons/fa';
 
@@ -73,29 +73,30 @@ const StandoutDishes: React.FC<StandoutDishesProps> = ({ dishes }) => {
   };
 
   const toggleFavorite = (dishId: string) => {
+    const dish = displayDishes.find((d) => d.id === dishId);
+    if (!dish) return;
+
+    // Update local favorites state for UI toggle
     const newFavorites = new Set(favorites);
     if (newFavorites.has(dishId)) {
       newFavorites.delete(dishId);
     } else {
       newFavorites.add(dishId);
-      // Add to wishlist in Redux
-      const dish = displayDishes.find((d) => d.id === dishId);
-      if (dish) {
-        dispatch(
-          addToWishlist({
-            id: dish.id,
-            name: dish.name,
-            description: dish.description,
-            price: dish.price || 0,
-            image: dish.image,
-            category: dish.category || 'Menu',
-            rating: 4.5,
-            stock: 100,
-          }),
-        );
-      }
     }
     setFavorites(newFavorites);
+    // Sync with Redux using toggleWishlist
+    dispatch(
+      toggleWishlist({
+        id: dish.id,
+        name: dish.name,
+        description: dish.description,
+        price: dish.price || 0,
+        image: dish.image,
+        category: dish.category || 'Menu',
+        rating: 4.5,
+        stock: 100,
+      }),
+    );
   };
 
   const visibleDishes = displayDishes.slice(
