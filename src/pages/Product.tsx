@@ -3,18 +3,19 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { fetchProducts } from '../feature/product/productsSlice';
 import { addToCart } from '../feature/cart/cartSlice';
+import { MdOutlineShoppingBag } from 'react-icons/md';
+import { RiGridLine } from 'react-icons/ri';
+import { TfiLayoutListThumb } from 'react-icons/tfi';
 
 const Product: React.FC = () => {
   const dispatch = useAppDispatch();
   const { products, loading } = useAppSelector((state) => state.products);
-
-  const [priceRange, setPriceRange] = useState<[number, number]>([50, 1500]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedWeights, setSelectedWeights] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState('featured');
   const [currentPage, setCurrentPage] = useState(1);
-
   const itemsPerPage = 9;
 
   useEffect(() => {
@@ -105,8 +106,8 @@ const Product: React.FC = () => {
   );
 
   return (
-    <div className="bg-gray-50 min-h-screen py-8">
-      <div className="container mx-auto px-4">
+    <div className=" font-poppins min-h-screen py-8">
+      <div className="container mx-auto max-w-6xl  max-lg:px-6 ">
         <div className="grid grid-cols-12 gap-6">
           {/* Sidebar Filters */}
           <div className="col-span-12 lg:col-span-3 space-y-5">
@@ -120,7 +121,7 @@ const Product: React.FC = () => {
                     setSelectedCategories([]);
                     setSelectedWeights([]);
                     setSelectedTags([]);
-                    setPriceRange([50, 1500]);
+                    setPriceRange([0, 500]);
                   }}
                 >
                   Clear
@@ -157,15 +158,17 @@ const Product: React.FC = () => {
               <h3 className="font-bold text-gray-900 mb-4">Filter by Price</h3>
               <input
                 type="range"
-                min={50}
-                max={1500}
+                min={0}
+                max={500}
                 value={priceRange[1]}
-                onChange={(e) => setPriceRange([50, parseInt(e.target.value)])}
+                onChange={(e) => setPriceRange([0, parseInt(e.target.value)])}
                 className="w-full h-1 bg-red-200 rounded-lg cursor-pointer appearance-none"
                 style={{
                   background: `linear-gradient(to right, #ef4444 0%, #ef4444 ${
-                    ((priceRange[1] - 50) / (1500 - 50)) * 100
-                  }%, #fee2e2 ${((priceRange[1] - 50) / (1500 - 50)) * 100}%, #fee2e2 100%)`,
+                    ((priceRange[1] - 0) / (500 - 0)) * 100
+                  }%, #fee2e2 ${
+                    ((priceRange[1] - 0) / (500 - 0)) * 100
+                  }%, #fee2e2 100%)`,
                 }}
               />
               <div className="flex justify-between text-sm text-gray-700 mt-2">
@@ -257,16 +260,18 @@ const Product: React.FC = () => {
           {/* Right Products Section */}
           <div className="col-span-12 lg:col-span-9">
             {/* Header */}
-            <div className="flex justify-between items-center mb-6">
-              <div className="text-sm text-gray-600">
-                {filteredProducts.length} items found
+            <div className="flex justify-between items-center mb-8 bg-gray-100 p-4 rounded-lg">
+              <div className="text-sm text-gray-600 font-medium flex items-center">
+                <RiGridLine />
+                <TfiLayoutListThumb />
+                We found {filteredProducts.length} items for you!
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600">Sort by:</span>
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-gray-600">Sort By :</span>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="border border-gray-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="border border-gray-300 bg-white rounded px-3 py-1.5 text-sm focus:outline-none"
                 >
                   <option value="featured">Featured</option>
                   <option value="price-low">Price: Low to High</option>
@@ -287,30 +292,29 @@ const Product: React.FC = () => {
                   {paginatedProducts.map((product) => (
                     <div
                       key={product.id}
-                      className="bg-white rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 group"
+                      className="overflow-hidden rounded-md border border-slate-200 bg-white p-2"
                     >
                       {/* Product Image */}
-                      <Link to={`/products/${product.id}`}>
-                        <div className="relative bg-gray-50 p-6 h-56 flex items-center justify-center">
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-300"
+
+                      <div className=" relative border rounded-md bg-gray-100 p-6 h-56 flex  justify-center">
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-300"
+                        />
+                        <div className="cursor-pointer bg-gray-100 absolute p-1 -bottom-3 border rounded-full">
+                          <MdOutlineShoppingBag
+                            className="text-base text-[#64B496]"
+                            onClick={() => handleAddToCart(product)}
                           />
                         </div>
-                      </Link>
+                      </div>
 
                       {/* Product Info */}
-                      <div className="p-4">
+                      <div className="p-4 flex flex-col items-center">
                         <p className="text-xs text-gray-500 mb-1">
                           {product.category}
                         </p>
-                        <Link to={`/products/${product.id}`}>
-                          <h3 className="text-sm font-semibold text-gray-900 mb-2 line-clamp-2 min-h-[40px] hover:text-red-500 transition">
-                            {product.name}
-                          </h3>
-                        </Link>
-
                         {/* Rating */}
                         <div className="flex items-center gap-1 mb-2">
                           {[...Array(5)].map((_, i) => (
@@ -333,10 +337,21 @@ const Product: React.FC = () => {
                               />
                             </svg>
                           ))}
+                          <span className="text-sm font-medium text-gray-700">
+                            ({product.rating.toFixed(1)})
+                          </span>
                         </div>
+                        <Link to={`/products/${product.id}`}>
+                          <h3
+                            className="font-medium text-[15px] leading-[24px] tracking-[0.48px]
+                                    text-center text-gray-900 mb-2 line-clamp-2 min-h-[48px] hover:text-red-500 transition"
+                          >
+                            {product.description}
+                          </h3>
+                        </Link>
 
                         {/* Price */}
-                        <div className="flex items-baseline gap-2 mb-3">
+                        <div className="flex items-baseline gap-2 ">
                           <span className="text-red-500 text-lg font-bold">
                             ${product.price.toFixed(2)}
                           </span>
@@ -344,49 +359,39 @@ const Product: React.FC = () => {
                             ${(product.price * 1.2).toFixed(2)}
                           </span>
                         </div>
-
-                        {/* Add to Cart */}
-                        <button
-                          onClick={() => handleAddToCart(product)}
-                          className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded text-sm font-medium transition flex items-center justify-center gap-2"
-                        >
-                          Add to Cart
-                        </button>
                       </div>
                     </div>
                   ))}
                 </div>
 
                 {/* Pagination */}
-                <div className="flex justify-center items-center gap-2 mt-8">
+                <div className="text-base font-normal flex justify-center items-center  mt-8">
                   <button
                     onClick={() =>
                       setCurrentPage((prev) => Math.max(prev - 1, 1))
                     }
-                    className="px-3 py-1.5 border border-gray-300 rounded hover:bg-gray-50 text-sm"
+                    className="px-3 py-1.5 border border-gray-300  hover:bg-gray-50 "
                   >
                     Previous
                   </button>
-
                   {Array.from({ length: totalPages }, (_, i) => (
                     <button
                       key={i}
                       onClick={() => setCurrentPage(i + 1)}
-                      className={`px-3 py-1.5 rounded text-sm ${
+                      className={`px-3 py-1.5 border border-gray-300  ${
                         currentPage === i + 1
-                          ? 'bg-red-500 text-white'
-                          : 'border border-gray-300 hover:bg-gray-50'
+                          ? 'bg-red-500  text-white'
+                          : ' hover:bg-gray-50'
                       }`}
                     >
                       {i + 1}
                     </button>
                   ))}
-
                   <button
                     onClick={() =>
                       setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                     }
-                    className="px-3 py-1.5 border border-gray-300 rounded hover:bg-gray-50 text-sm"
+                    className="px-3 py-1.5 border border-gray-300  hover:bg-gray-50 "
                   >
                     Next
                   </button>

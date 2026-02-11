@@ -43,9 +43,10 @@ const mockProducts: Product[] = [
   {
     id: 'p1',
     name: 'Fresh Apple',
-    description: 'Crisp and sweet apples.',
-    price: 2.5,
-    image: '/images/apple.png',
+    description: 'Crisp and sweet apples. Perfect for a healthy snack.',
+    price: 200.5,
+    image:
+      'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=300&h=300&fit=crop',
     category: 'Fruit',
     rating: 4.5,
     stock: 120,
@@ -56,9 +57,10 @@ const mockProducts: Product[] = [
   {
     id: 'p2',
     name: 'Banana Bunch',
-    description: 'Ripe bananas full of energy.',
+    description: 'Ripe bananas full of energy. Rich in potassium.',
     price: 1.8,
-    image: '/images/banana.png',
+    image:
+      'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=300&h=300&fit=crop',
     category: 'Fruit',
     rating: 4.7,
     stock: 90,
@@ -69,9 +71,10 @@ const mockProducts: Product[] = [
   {
     id: 'p3',
     name: 'Broccoli',
-    description: 'Fresh green broccoli.',
+    description: 'Fresh green broccoli. Packed with vitamins and fiber.',
     price: 3.2,
-    image: '/images/broccoli.png',
+    image:
+      'https://images.unsplash.com/photo-1584270354949-c26b0d5b4a0c?w=300&h=300&fit=crop',
     category: 'Vegetable',
     rating: 4.3,
     stock: 60,
@@ -81,9 +84,11 @@ const mockProducts: Product[] = [
   {
     id: 'p4',
     name: 'Carrot',
-    description: 'Organic carrots for healthy eating.',
+    description:
+      'Organic carrots for healthy eating. Great for salads and cooking.',
     price: 2.0,
-    image: '/images/carrot.png',
+    image:
+      'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=300&h=300&fit=crop',
     category: 'Vegetable',
     rating: 4.6,
     stock: 80,
@@ -93,9 +98,10 @@ const mockProducts: Product[] = [
   {
     id: 'p5',
     name: 'Chicken Breast',
-    description: 'Fresh boneless chicken breast.',
+    description: 'Fresh boneless chicken breast. Lean protein source.',
     price: 7.5,
-    image: '/images/chicken.png',
+    image:
+      'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=300&h=300&fit=crop',
     category: 'Meat',
     rating: 4.8,
     stock: 40,
@@ -104,9 +110,10 @@ const mockProducts: Product[] = [
   {
     id: 'p6',
     name: 'Beef Steak',
-    description: 'Premium quality beef steak.',
+    description: 'Premium quality beef steak. Perfect for grilling.',
     price: 12.0,
-    image: '/images/beef.png',
+    image:
+      'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=300&h=300&fit=crop',
     category: 'Meat',
     rating: 4.9,
     stock: 35,
@@ -115,9 +122,10 @@ const mockProducts: Product[] = [
   {
     id: 'p7',
     name: 'Milk 1L',
-    description: 'Fresh cow milk 1 liter.',
+    description: 'Fresh cow milk 1 liter. Rich in calcium and vitamin D.',
     price: 1.5,
-    image: '/images/milk.png',
+    image:
+      'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=300&h=300&fit=crop',
     category: 'Drink',
     rating: 4.4,
     stock: 100,
@@ -127,9 +135,10 @@ const mockProducts: Product[] = [
   {
     id: 'p8',
     name: 'Orange Juice',
-    description: '100% pure orange juice.',
+    description: '100% pure orange juice. No added sugar.',
     price: 3.0,
-    image: '/images/orange-juice.png',
+    image:
+      'https://images.unsplash.com/photo-1613478225719-02e6902c235f?w=300&h=300&fit=crop',
     category: 'Drink',
     rating: 4.2,
     stock: 70,
@@ -139,9 +148,10 @@ const mockProducts: Product[] = [
   {
     id: 'p9',
     name: 'Spinach',
-    description: 'Fresh green spinach leaves.',
+    description: 'Fresh green spinach leaves. Rich in iron and nutrients.',
     price: 2.2,
-    image: '/images/spinach.png',
+    image:
+      'https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=300&h=300&fit=crop',
     category: 'Vegetable',
     rating: 4.1,
     stock: 50,
@@ -151,9 +161,10 @@ const mockProducts: Product[] = [
   {
     id: 'p10',
     name: 'Tomato',
-    description: 'Juicy red tomatoes.',
+    description: 'Juicy red tomatoes. Perfect for salads and sauces.',
     price: 2.5,
-    image: '/images/tomato.png',
+    image:
+      'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=300&h=300&fit=crop',
     category: 'Vegetable',
     rating: 4.6,
     stock: 90,
@@ -163,9 +174,10 @@ const mockProducts: Product[] = [
   {
     id: 'p11',
     name: 'Green Tea',
-    description: 'Refreshing green tea leaves.',
+    description: 'Refreshing green tea leaves. Rich in antioxidants.',
     price: 4.5,
-    image: '/images/green-tea.png',
+    image:
+      'https://images.unsplash.com/photo-1627435601361-ec25f5b1d0e5?w=300&h=300&fit=crop',
     category: 'Drink',
     rating: 4.8,
     stock: 120,
@@ -175,9 +187,10 @@ const mockProducts: Product[] = [
   {
     id: 'p12',
     name: 'Strawberry Pack',
-    description: 'Fresh strawberries.',
+    description: 'Fresh strawberries. Sweet and juicy.',
     price: 5.0,
-    image: '/images/strawberry.png',
+    image:
+      'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=300&h=300&fit=crop',
     category: 'Fruit',
     rating: 4.9,
     stock: 60,
@@ -187,9 +200,10 @@ const mockProducts: Product[] = [
   {
     id: 'p13',
     name: 'Almond Milk',
-    description: 'Healthy almond milk.',
+    description: 'Healthy almond milk. Lactose-free alternative.',
     price: 3.8,
-    image: '/images/almond-milk.png',
+    image:
+      'https://images.unsplash.com/photo-1600783244917-20909693a6f4?w=300&h=300&fit=crop',
     category: 'Drink',
     rating: 4.5,
     stock: 75,
@@ -199,9 +213,10 @@ const mockProducts: Product[] = [
   {
     id: 'p14',
     name: 'Cheddar Cheese',
-    description: 'Rich and creamy cheddar cheese.',
+    description: 'Rich and creamy cheddar cheese. Perfect for sandwiches.',
     price: 6.0,
-    image: '/images/cheese.png',
+    image:
+      'https://images.unsplash.com/photo-1618164435735-413d3b066c9a?w=300&h=300&fit=crop',
     category: 'Diary & Milk',
     rating: 4.7,
     stock: 50,
@@ -211,9 +226,10 @@ const mockProducts: Product[] = [
   {
     id: 'p15',
     name: 'Potato',
-    description: 'Fresh farm potatoes.',
+    description: 'Fresh farm potatoes. Versatile for many dishes.',
     price: 1.5,
-    image: '/images/potato.png',
+    image:
+      'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=300&h=300&fit=crop',
     category: 'Vegetable',
     rating: 4.2,
     stock: 200,
@@ -223,9 +239,10 @@ const mockProducts: Product[] = [
   {
     id: 'p16',
     name: 'Cucumber',
-    description: 'Crisp green cucumber.',
+    description: 'Crisp green cucumber. Refreshing and hydrating.',
     price: 1.8,
-    image: '/images/cucumber.png',
+    image:
+      'https://images.unsplash.com/photo-1604977042946-1eecc30f269e?w=300&h=300&fit=crop',
     category: 'Vegetable',
     rating: 4.3,
     stock: 110,
@@ -235,9 +252,10 @@ const mockProducts: Product[] = [
   {
     id: 'p17',
     name: 'Pork Chop',
-    description: 'Tender pork chop.',
+    description: 'Tender pork chop. Perfect for roasting or grilling.',
     price: 10.5,
-    image: '/images/pork.png',
+    image:
+      'https://images.unsplash.com/photo-1432139555190-58524dae6a55?w=300&h=300&fit=crop',
     category: 'Meat',
     rating: 4.7,
     stock: 30,
@@ -246,9 +264,10 @@ const mockProducts: Product[] = [
   {
     id: 'p18',
     name: 'Yogurt',
-    description: 'Creamy yogurt for breakfast.',
+    description: 'Creamy yogurt for breakfast. Contains live cultures.',
     price: 2.2,
-    image: '/images/yogurt.png',
+    image:
+      'https://images.unsplash.com/photo-1571212515416-fef01fc43637?w=300&h=300&fit=crop',
     category: 'Diary & Milk',
     rating: 4.5,
     stock: 90,
@@ -258,9 +277,10 @@ const mockProducts: Product[] = [
   {
     id: 'p19',
     name: 'Lettuce',
-    description: 'Fresh green lettuce.',
+    description: 'Fresh green lettuce. Crisp and perfect for salads.',
     price: 1.9,
-    image: '/images/lettuce.png',
+    image:
+      'https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?w=300&h=300&fit=crop',
     category: 'Vegetable',
     rating: 4.4,
     stock: 70,
@@ -270,9 +290,10 @@ const mockProducts: Product[] = [
   {
     id: 'p20',
     name: 'Mango Pack',
-    description: 'Sweet mangoes.',
+    description: 'Sweet mangoes. Tropical and delicious.',
     price: 4.5,
-    image: '/images/mango.png',
+    image:
+      'https://images.unsplash.com/photo-1553279768-865429fa0078?w=300&h=300&fit=crop',
     category: 'Fruit',
     rating: 4.8,
     stock: 50,
@@ -282,9 +303,10 @@ const mockProducts: Product[] = [
   {
     id: 'p21',
     name: 'Black Tea',
-    description: 'Strong black tea.',
+    description: 'Strong black tea. Rich and full-bodied flavor.',
     price: 3.5,
-    image: '/images/black-tea.png',
+    image:
+      'https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=300&h=300&fit=crop',
     category: 'Drink',
     rating: 4.6,
     stock: 100,
@@ -294,9 +316,10 @@ const mockProducts: Product[] = [
   {
     id: 'p22',
     name: 'Watermelon Slice',
-    description: 'Juicy watermelon.',
+    description: 'Juicy watermelon. Perfect for summer.',
     price: 5.0,
-    image: '/images/watermelon.png',
+    image:
+      'https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=300&h=300&fit=crop',
     category: 'Fruit',
     rating: 4.7,
     stock: 40,
@@ -306,9 +329,10 @@ const mockProducts: Product[] = [
   {
     id: 'p23',
     name: 'Pineapple',
-    description: 'Fresh tropical pineapple.',
+    description: 'Fresh tropical pineapple. Sweet and tangy.',
     price: 3.8,
-    image: '/images/pineapple.png',
+    image:
+      'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=300&h=300&fit=crop',
     category: 'Fruit',
     rating: 4.5,
     stock: 60,
@@ -318,9 +342,10 @@ const mockProducts: Product[] = [
   {
     id: 'p24',
     name: 'Red Pepper',
-    description: 'Spicy red pepper.',
+    description: 'Spicy red pepper. Adds heat to any dish.',
     price: 2.0,
-    image: '/images/red-pepper.png',
+    image:
+      'https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=300&h=300&fit=crop',
     category: 'Vegetable',
     rating: 4.3,
     stock: 80,
@@ -330,9 +355,10 @@ const mockProducts: Product[] = [
   {
     id: 'p25',
     name: 'Ginger',
-    description: 'Fresh ginger root.',
+    description: 'Fresh ginger root. Aromatic and spicy.',
     price: 3.0,
-    image: '/images/ginger.png',
+    image:
+      'https://images.unsplash.com/photo-1615485500704-8e990c9900f7?w=300&h=300&fit=crop',
     category: 'Vegetable',
     rating: 4.6,
     stock: 50,
@@ -342,9 +368,10 @@ const mockProducts: Product[] = [
   {
     id: 'p26',
     name: 'Orange',
-    description: 'Juicy oranges for breakfast.',
+    description: 'Juicy oranges for breakfast. Rich in vitamin C.',
     price: 2.5,
-    image: '/images/orange.png',
+    image:
+      'https://images.unsplash.com/photo-1582979512210-99b6a53386f9?w=300&h=300&fit=crop',
     category: 'Fruit',
     rating: 4.7,
     stock: 90,
@@ -354,9 +381,10 @@ const mockProducts: Product[] = [
   {
     id: 'p27',
     name: 'Milk Chocolate',
-    description: 'Sweet milk chocolate bars.',
+    description: 'Sweet milk chocolate bars. Smooth and creamy.',
     price: 1.8,
-    image: '/images/chocolate.png',
+    image:
+      'https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=300&h=300&fit=crop',
     category: 'Snack & Spice',
     rating: 4.8,
     stock: 150,
@@ -366,9 +394,10 @@ const mockProducts: Product[] = [
   {
     id: 'p28',
     name: 'Almonds',
-    description: 'Crunchy almonds for snacks.',
+    description: 'Crunchy almonds for snacks. Rich in healthy fats.',
     price: 5.0,
-    image: '/images/almonds.png',
+    image:
+      'https://images.unsplash.com/photo-1508061253366-f7da158c6c20?w=300&h=300&fit=crop',
     category: 'Snack & Spice',
     rating: 4.9,
     stock: 80,
@@ -378,9 +407,10 @@ const mockProducts: Product[] = [
   {
     id: 'p29',
     name: 'Cabbage',
-    description: 'Fresh green cabbage.',
+    description: 'Fresh green cabbage. Great for coleslaw and stir-fry.',
     price: 1.7,
-    image: '/images/cabbage.png',
+    image:
+      'https://images.unsplash.com/photo-1551888761-2a5d71c6c5d8?w=300&h=300&fit=crop',
     category: 'Vegetable',
     rating: 4.2,
     stock: 70,
@@ -390,9 +420,10 @@ const mockProducts: Product[] = [
   {
     id: 'p30',
     name: 'Pasta',
-    description: 'Italian pasta for cooking.',
+    description: 'Italian pasta for cooking. Made from durum wheat.',
     price: 2.5,
-    image: '/images/pasta.png',
+    image:
+      'https://images.unsplash.com/photo-1551462147-ff29053bfc14?w=300&h=300&fit=crop',
     category: 'Snack & Spice',
     rating: 4.5,
     stock: 120,

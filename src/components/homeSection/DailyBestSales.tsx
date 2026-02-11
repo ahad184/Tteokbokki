@@ -109,7 +109,7 @@ const DailyBestSells: React.FC = () => {
 
   return (
     <section className="py-16  bg-white">
-      <div className="container  mx-auto px-">
+      <div className="container  mx-auto px-4">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-bold text-gray-900">Daily Best Sells</h2>
