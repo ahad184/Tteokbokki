@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { fetchProducts } from '../feature/product/productsSlice';
-import { addToCart } from '../feature/cart/cartSlice';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { fetchProducts } from "../feature/product/productsSlice";
+import { addToCart } from "../feature/cart/cartSlice";
 
 const Product: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -12,7 +12,7 @@ const Product: React.FC = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedWeights, setSelectedWeights] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [sortBy, setSortBy] = useState('featured');
+  const [sortBy, setSortBy] = useState("featured");
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 9;
@@ -23,28 +23,28 @@ const Product: React.FC = () => {
 
   // Example filter data
   const categories = [
-    { name: 'Milk & Drinks', count: 120 },
-    { name: 'Diary & Milk', count: 143 },
-    { name: 'Snack & Spice', count: 142 },
+    { name: "Milk & Drinks", count: 120 },
+    { name: "Diary & Milk", count: 143 },
+    { name: "Snack & Spice", count: 142 },
   ];
 
   const productCategories = [
-    { name: 'Fruit', count: 98, color: 'bg-blue-500' },
-    { name: 'Vegetable', count: 132, color: 'bg-pink-500' },
-    { name: 'Meat', count: 98, color: 'bg-green-500' },
-    { name: 'Drink', count: 121, color: 'bg-yellow-500' },
+    { name: "Fruit", count: 98, color: "bg-blue-500" },
+    { name: "Vegetable", count: 132, color: "bg-pink-500" },
+    { name: "Meat", count: 98, color: "bg-green-500" },
+    { name: "Drink", count: 121, color: "bg-yellow-500" },
   ];
 
   const weights = [
-    { label: '50g Pack', count: 152 },
-    { label: '100g Pack', count: 125 },
-    { label: '150g Pack', count: 98 },
+    { label: "50g Pack", count: 152 },
+    { label: "100g Pack", count: 125 },
+    { label: "150g Pack", count: 98 },
   ];
 
   const tags = [
-    { label: 'Vegetables', count: 4562 },
-    { label: 'Tea Fruits', count: 98 },
-    { label: 'Fruits', count: 4875 },
+    { label: "Vegetables", count: 4562 },
+    { label: "Tea Fruits", count: 98 },
+    { label: "Fruits", count: 4875 },
   ];
 
   // Toggle handlers
@@ -91,8 +91,8 @@ const Product: React.FC = () => {
 
   // Sorting logic
   const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sortBy === 'price-low') return a.price - b.price;
-    if (sortBy === 'price-high') return b.price - a.price;
+    if (sortBy === "price-low") return a.price - b.price;
+    if (sortBy === "price-high") return b.price - a.price;
     // if (sortBy === 'newest') return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     return 0; // featured
   });
@@ -113,7 +113,7 @@ const Product: React.FC = () => {
             {/* All Categories */}
             <div className="bg-white rounded-lg p-5 shadow-sm">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-gray-900">All</h3>
+                <h3 className="font-bold text-gray-900">Product Cat</h3>
                 <button
                   className="text-sm text-gray-500"
                   onClick={() => {
@@ -318,8 +318,8 @@ const Product: React.FC = () => {
                               key={i}
                               className={`w-3.5 h-3.5 ${
                                 i < Math.floor(product.rating)
-                                  ? 'text-yellow-400 fill-current'
-                                  : 'text-gray-300'
+                                  ? "text-yellow-400 fill-current"
+                                  : "text-gray-300"
                               }`}
                               fill="none"
                               stroke="currentColor"
@@ -374,8 +374,8 @@ const Product: React.FC = () => {
                       onClick={() => setCurrentPage(i + 1)}
                       className={`px-3 py-1.5 rounded text-sm ${
                         currentPage === i + 1
-                          ? 'bg-red-500 text-white'
-                          : 'border border-gray-300 hover:bg-gray-50'
+                          ? "bg-red-500 text-white"
+                          : "border border-gray-300 hover:bg-gray-50"
                       }`}
                     >
                       {i + 1}
