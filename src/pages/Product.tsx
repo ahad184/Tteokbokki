@@ -122,19 +122,7 @@ const Product: React.FC = () => {
                 <h3 className="text-lg font-semibold text-gray-900">
                                     Product Category                 
                 </h3>
-                                
-                <button
-                  className="text-sm text-red-500 hover:underline"
-                  onClick={() => {
-                    setSelectedCategories([]);
-                    setSelectedWeights([]);
-                    setSelectedTags([]);
-                    setPriceRange([0, 500]);
-                  }}
-                >
-                                    Clear                 
-                </button>
-                              
+                                               
               </div>
                             {/* Categories */}
                             
@@ -171,13 +159,13 @@ const Product: React.FC = () => {
                 ))}
                               
               </div>
-                            {/* Filter By Price */}
-                            
+                {/* Filter By Price */}               
               <div>
+                {' '}
                                 
                 <h3 className="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">
-                                    Filter By Price                 
-                </h3>
+                                    Filter By Price                
+                </h3>{' '}
                                 
                 <input
                   type="range"
@@ -186,29 +174,29 @@ const Product: React.FC = () => {
                   value={priceRange[1]}
                   onChange={(e) => setPriceRange([0, parseInt(e.target.value)])}
                   className="w-full accent-red-500"
-                />
+                />{' '}
                                 
                 <p className="mt-3 font-semibold text-sm">
                                     Price :                   
                   <span className="text-gray-600">
-                                        ${priceRange[0]} - ${priceRange[1]}
+                                        ${priceRange[0]} - ${priceRange[1]}{' '}
                                       
-                  </span>
+                  </span>{' '}
                                   
-                </p>
+                </p>{' '}
                                 
                 <button className="mt-4 w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-md transition">
                                     Filter                 
-                </button>
+                </button>{' '}
                               
               </div>
-                            {/* Product Category Colors */}
-                            
+              {/* Product Category Colors */}               
               <div>
+                {' '}
                                 
                 <h3 className="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">
-                                    Product Category                 
-                </h3>
+                                    Product Category                
+                </h3>{' '}
                                 
                 <div className="space-y-3">
                                     
