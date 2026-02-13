@@ -110,6 +110,7 @@ const Product: React.FC = () => {
       <div className="container mx-auto max-w-6xl  max-lg:px-6 ">
         <div className="grid grid-cols-12 gap-6">
           {/* Sidebar Filters */}
+
           <div className="col-span-12 lg:col-span-3 space-y-6">
                         {/* Main Wrapper */}
                         

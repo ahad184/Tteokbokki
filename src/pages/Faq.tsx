@@ -51,7 +51,7 @@ const Faq: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="mx-auto max-w-6xl px-4 py-10 lg:px-0 grid grid-cols-1 sm:grid-cols-2 gap-8">
+      <div className="mx-auto max-w-6xl px-4 py-10 lg:px-0 grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Image Section */}
         <div className="w-full p-4 flex-shrink-0">
           <img

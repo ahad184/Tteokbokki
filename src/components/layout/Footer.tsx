@@ -1,8 +1,9 @@
-import React from "react";
-import { AiOutlineInstagram } from "react-icons/ai";
-import { IoPaperPlaneSharp } from "react-icons/io5";
-import { PiGlobe } from "react-icons/pi";
-import { RiFacebookLine, RiTwitterXLine } from "react-icons/ri";
+import React from 'react';
+import { AiOutlineInstagram } from 'react-icons/ai';
+import { IoPaperPlaneSharp } from 'react-icons/io5';
+import { PiGlobe } from 'react-icons/pi';
+import { RiFacebookLine, RiTwitterXLine } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
 const Footer: React.FC = () => {
   const thumbs = [
     '/assets/footer/img_1 (1).png',
@@ -57,14 +58,14 @@ const Footer: React.FC = () => {
               <h5 className="font-bold text-black">Company</h5>
               <ul className=" text-[#777777] space-y-2 text-sm">
                 <li>
-                  <a href="#" className="hover:text-[#ff4c3b]">
+                  <Link to="/about" className="hover:text-[#ff4c3b]">
                     About Us
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-[#ff4c3b]">
+                  <Link to="#" className="hover:text-[#ff4c3b]">
                     Delivery Information
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a href="#" className="hover:text-[#ff4c3b]">
@@ -159,13 +160,13 @@ const Footer: React.FC = () => {
                   <AiOutlineInstagram className="text-2xl" />
                 </button>
               </div>
-             <div className="mt-4 flex gap-2">
-  {thumbs.map((src, idx) => (
-    <div
-      key={idx}
-      className="h-10 w-20 rounded-md bg-cover bg-center"
-      style={{ backgroundImage: `url("${src}")` }}
-    />
+              <div className="mt-4 flex gap-2">
+                {thumbs.map((src, idx) => (
+                  <div
+                    key={idx}
+                    className="h-10 w-20 rounded-md bg-cover bg-center"
+                    style={{ backgroundImage: `url("${src}")` }}
+                  />
                 ))}
               </div>
             </div>
