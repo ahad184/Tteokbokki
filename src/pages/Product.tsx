@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { fetchProducts } from '../feature/product/productsSlice';
-import { addToCart } from '../feature/cart/cartSlice';
-import { MdOutlineShoppingBag } from 'react-icons/md';
-import { RiGridLine } from 'react-icons/ri';
-import { TfiLayoutListThumb } from 'react-icons/tfi';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { fetchProducts } from "../feature/product/productsSlice";
+import { addToCart } from "../feature/cart/cartSlice";
+import { MdOutlineShoppingBag } from "react-icons/md";
+import { RiGridLine } from "react-icons/ri";
+import { TfiLayoutListThumb } from "react-icons/tfi";
 
 const Product: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -14,7 +14,7 @@ const Product: React.FC = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedWeights, setSelectedWeights] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [sortBy, setSortBy] = useState('featured');
+  const [sortBy, setSortBy] = useState("featured");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
 
@@ -24,28 +24,28 @@ const Product: React.FC = () => {
 
   // Example filter data
   const categories = [
-    { name: 'Milk & Drinks', count: 120 },
-    { name: 'Diary & Milk', count: 143 },
-    { name: 'Snack & Spice', count: 142 },
+    { name: "Milk & Drinks", count: 120 },
+    { name: "Diary & Milk", count: 143 },
+    { name: "Snack & Spice", count: 142 },
   ];
 
   const productCategories = [
-    { name: 'Fruit', count: 98, color: 'bg-blue-500' },
-    { name: 'Vegetable', count: 132, color: 'bg-pink-500' },
-    { name: 'Meat', count: 98, color: 'bg-green-500' },
-    { name: 'Drink', count: 121, color: 'bg-yellow-500' },
+    { name: "Fruit", count: 98, color: "bg-blue-500" },
+    { name: "Vegetable", count: 132, color: "bg-pink-500" },
+    { name: "Meat", count: 98, color: "bg-green-500" },
+    { name: "Drink", count: 121, color: "bg-yellow-500" },
   ];
 
   const weights = [
-    { label: '50g Pack', count: 152 },
-    { label: '100g Pack', count: 125 },
-    { label: '150g Pack', count: 98 },
+    { label: "50g Pack", count: 152 },
+    { label: "100g Pack", count: 125 },
+    { label: "150g Pack", count: 98 },
   ];
 
   const tags = [
-    { label: 'Vegetables', count: 4562 },
-    { label: 'Tea Fruits', count: 98 },
-    { label: 'Fruits', count: 4875 },
+    { label: "Vegetables", count: 4562 },
+    { label: "Tea Fruits", count: 98 },
+    { label: "Fruits", count: 4875 },
   ];
 
   // Toggle handlers
@@ -92,8 +92,8 @@ const Product: React.FC = () => {
 
   // Sorting logic
   const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sortBy === 'price-low') return a.price - b.price;
-    if (sortBy === 'price-high') return b.price - a.price;
+    if (sortBy === "price-low") return a.price - b.price;
+    if (sortBy === "price-high") return b.price - a.price;
     // if (sortBy === 'newest') return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     return 0; // featured
   });
@@ -112,17 +112,16 @@ const Product: React.FC = () => {
           {/* Sidebar Filters */}
 
           <div className="col-span-12 lg:col-span-3 space-y-6">
-                        {/* Main Wrapper */}
-                        
+            {/* Main Wrapper */}
+
             <div className="bg-gray-200 rounded-xl p-6 shadow-sm space-y-8">
-                            {/* Header + Clear */}
-                            
+              {/* Header + Clear */}
+
               <div className="flex items-center justify-between border-b pb-3">
-                                
                 <h3 className="text-lg font-semibold text-gray-900">
-                                    Product Category                 
+                  Product Category
                 </h3>
-                                
+
                 <button
                   className="text-sm text-red-500 hover:underline"
                   onClick={() => {
@@ -132,53 +131,43 @@ const Product: React.FC = () => {
                     setPriceRange([0, 500]);
                   }}
                 >
-                                    Clear                 
+                  Clear
                 </button>
-                              
               </div>
-                            {/* Categories */}
-                            
+              {/* Categories */}
+
               <div className="space-y-3">
-                                
                 {categories.map((category) => (
                   <label
                     key={category.name}
                     className="flex items-center justify-between cursor-pointer"
                   >
-                                        
                     <div className="flex items-center gap-2">
-                                            
                       <input
                         type="checkbox"
                         checked={selectedCategories.includes(category.name)}
                         onChange={() => toggleCategory(category.name)}
                         className="w-4 h-4 accent-red-500"
                       />
-                                            
+
                       <span className="text-sm text-gray-700">
-                                                {category.name}
-                                              
+                        {category.name}
                       </span>
-                                          
                     </div>
-                                        
+
                     <span className="text-xs text-gray-400">
-                                            [{category.count}]
-                                          
+                      [{category.count}]
                     </span>
-                                      
                   </label>
                 ))}
-                              
               </div>
-                            {/* Filter By Price */}
-                            
+              {/* Filter By Price */}
+
               <div>
-                                
                 <h3 className="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">
-                                    Filter By Price                 
+                  Filter By Price
                 </h3>
-                                
+
                 <input
                   type="range"
                   min={0}
@@ -187,126 +176,100 @@ const Product: React.FC = () => {
                   onChange={(e) => setPriceRange([0, parseInt(e.target.value)])}
                   className="w-full accent-red-500"
                 />
-                                
+
                 <p className="mt-3 font-semibold text-sm">
-                                    Price :                   
+                  Price :
                   <span className="text-gray-600">
-                                        ${priceRange[0]} - ${priceRange[1]}
-                                      
+                    ${priceRange[0]} - ${priceRange[1]}
                   </span>
-                                  
                 </p>
-                                
+
                 <button className="mt-4 w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-md transition">
-                                    Filter                 
+                  Filter
                 </button>
-                              
               </div>
-                            {/* Product Category Colors */}
-                            
+              {/* Product Category Colors */}
+
               <div>
-                                
                 <h3 className="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">
-                                    Product Category                 
+                  Product Category
                 </h3>
-                                
+
                 <div className="space-y-3">
-                                    
                   {productCategories.map((category) => (
                     <div
                       key={category.name}
                       className="flex items-center justify-between"
                     >
-                                            
                       <div className="flex items-center gap-2">
-                                                
                         <input
                           type="checkbox"
                           className="w-4 h-4 accent-red-500"
                         />
-                                                
+
                         <span className="text-sm text-gray-700">
-                                                    {category.name}
-                                                  
+                          {category.name}
                         </span>
-                                              
                       </div>
-                                            
+
                       <div
                         className={`w-5 h-5 rounded ${category.color}`}
                       ></div>
-                                          
                     </div>
                   ))}
-                                  
                 </div>
-                              
               </div>
-                            {/* Weight */}
-                            
+              {/* Weight */}
+
               <div>
-                                
                 <h3 className="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">
-                                    Weight                 
+                  Weight
                 </h3>
-                                
+
                 <div className="space-y-3">
-                                    
                   {weights.map((weight) => (
                     <label
                       key={weight.label}
                       className="flex items-center gap-2"
                     >
-                                            
                       <input
                         type="checkbox"
                         checked={selectedWeights.includes(weight.label)}
                         onChange={() => toggleWeight(weight.label)}
                         className="w-4 h-4 accent-red-500"
                       />
-                                            
+
                       <span className="text-sm text-gray-700">
-                                                {weight.label}
-                                              
+                        {weight.label}
                       </span>
-                                          
                     </label>
                   ))}
-                                  
                 </div>
-                              
               </div>
-                            {/* Product Tags */}
-                            
+              {/* Product Tags */}
+
               <div>
-                                
                 <h3 className="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">
-                                    Products Tags                 
+                  Products Tags
                 </h3>
-                                
+
                 <div className="flex flex-wrap gap-2">
-                                    
                   {tags.map((tag) => (
                     <button
                       key={tag.label}
                       onClick={() => toggleTag(tag.label)}
                       className={`px-3 py-1 text-sm rounded-md border transition ${
                         selectedTags.includes(tag.label)
-                          ? 'bg-red-500 text-white border-red-500'
-                          : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-red-500 hover:text-white'
+                          ? "bg-red-500 text-white border-red-500"
+                          : "bg-gray-100 text-gray-600 border-gray-200 hover:bg-red-500 hover:text-white"
                       }`}
                     >
-                                            {tag.label}
-                                          
+                      {tag.label}
                     </button>
                   ))}
-                                  
                 </div>
-                              
               </div>
-                          
             </div>
-                      
           </div>
 
           {/* Right Products Section */}
@@ -374,8 +337,8 @@ const Product: React.FC = () => {
                               key={i}
                               className={`w-3.5 h-3.5 ${
                                 i < Math.floor(product.rating)
-                                  ? 'text-yellow-400 fill-current'
-                                  : 'text-gray-300'
+                                  ? "text-yellow-400 fill-current"
+                                  : "text-gray-300"
                               }`}
                               fill="none"
                               stroke="currentColor"
@@ -432,8 +395,8 @@ const Product: React.FC = () => {
                       onClick={() => setCurrentPage(i + 1)}
                       className={`px-3 py-1.5 border border-gray-300  ${
                         currentPage === i + 1
-                          ? 'bg-red-500  text-white'
-                          : ' hover:bg-gray-50'
+                          ? "bg-red-500  text-white"
+                          : " hover:bg-gray-50"
                       }`}
                     >
                       {i + 1}

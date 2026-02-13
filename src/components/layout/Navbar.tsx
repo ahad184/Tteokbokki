@@ -1,11 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { logout } from '../../feature/auth/authSlice';
-import { FiShoppingCart } from 'react-icons/fi';
-import { CiHeart } from 'react-icons/ci';
-import { IoPersonOutline } from 'react-icons/io5';
-import { CiSearch } from 'react-icons/ci';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { logout } from "../../feature/auth/authSlice";
+import { FiShoppingCart } from "react-icons/fi";
+import { CiHeart } from "react-icons/ci";
+import { IoPersonOutline } from "react-icons/io5";
+import { CiSearch } from "react-icons/ci";
 
 const Navbar: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -49,19 +49,19 @@ const Navbar: React.FC = () => {
             {isAuthenticated ? (
               <>
                 <span className="text-sm">{user?.name}</span>
-                <button onClick={handleLogout} className="hover:text-blue-200">
+                <button onClick={handleLogout} className="hover:text-red-500">
                   Logout
                 </button>
               </>
             ) : (
-              <Link to="/login" className="hover:text-blue-200">
+              <Link to="/login" className="hover:text-red-500">
                 <div className="flex items-center gap-1">
                   <IoPersonOutline />
                   <p className="text-sm font-medium">Account</p>
                 </div>
               </Link>
             )}
-            <Link to="/wishlist" className="hover:text-blue-200 ">
+            <Link to="/wishlist" className="hover:text-red-500 ">
               <div className="flex items-center gap-1 text-sm ">
                 <div className="relative">
                   <CiHeart />
@@ -74,7 +74,7 @@ const Navbar: React.FC = () => {
                 <p>Wishlist</p>
               </div>
             </Link>
-            <Link to="/cart" className="hover:text-blue-200 ">
+            <Link to="/cart" className="hover:text-red-500 ">
               <div className="flex items-center gap-1 text-sm">
                 <div className="relative">
                   <FiShoppingCart />
