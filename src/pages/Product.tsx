@@ -112,60 +112,61 @@ const Product: React.FC = () => {
           {/* Sidebar Filters */}
 
           <div className="col-span-12 lg:col-span-3 space-y-6">
-                        {/* Main Wrapper */}
-                        
+            {/* Main Wrapper */}
+
             <div className="bg-gray-200 rounded-xl p-6 shadow-sm space-y-8">
-                            {/* Header + Clear */}
-                            
+              {/* Header + Clear */}
               <div className="flex items-center justify-between border-b pb-3">
-                                
                 <h3 className="text-lg font-semibold text-gray-900">
-                                    Product Category                 
+                  Product Category
                 </h3>
-                                               
-              </div>
-                            {/* Categories */}
-                            
-              <div className="space-y-3">
                                 
+                <button
+                  className="text-sm text-red-500 hover:underline"
+                  onClick={() => {
+                    setSelectedCategories([]);
+                    setSelectedWeights([]);
+                    setSelectedTags([]);
+                    setPriceRange([0, 500]);
+                  }}
+                >
+                                    Clear                 
+                </button>
+                              
+              </div>
+              {/* Categories */}
+              <div className="space-y-3">
                 {categories.map((category) => (
                   <label
                     key={category.name}
                     className="flex items-center justify-between cursor-pointer"
                   >
-                                        
                     <div className="flex items-center gap-2">
-                                            
                       <input
                         type="checkbox"
                         checked={selectedCategories.includes(category.name)}
                         onChange={() => toggleCategory(category.name)}
                         className="w-4 h-4 accent-red-500"
                       />
-                                            
+
                       <span className="text-sm text-gray-700">
-                                                {category.name}
-                                              
+                        {category.name}
                       </span>
-                                          
                     </div>
-                                        
+
                     <span className="text-xs text-gray-400">
-                                            [{category.count}]
-                                          
+                      [{category.count}]
                     </span>
-                                      
                   </label>
                 ))}
-                              
               </div>
-                {/* Filter By Price */}               
+                            {/* Filter By Price */}
+                            
               <div>
-                {' '}
                                 
                 <h3 className="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">
-                                    Filter By Price                
-                </h3>{' '}
+                                    Filter By Price                 
+                </h3>
                                 
                 <input
                   type="range"
@@ -174,106 +175,87 @@ const Product: React.FC = () => {
                   value={priceRange[1]}
                   onChange={(e) => setPriceRange([0, parseInt(e.target.value)])}
                   className="w-full accent-red-500"
-                />{' '}
+                />
                                 
                 <p className="mt-3 font-semibold text-sm">
-                                    Price :                   
+                  Price :
                   <span className="text-gray-600">
-                                        ${priceRange[0]} - ${priceRange[1]}{' '}
+                                        ${priceRange[0]} - ${priceRange[1]}
                                       
-                  </span>{' '}
+                  </span>
                                   
-                </p>{' '}
+                </p>
                                 
                 <button className="mt-4 w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-md transition">
                                     Filter                 
-                </button>{' '}
+                </button>
                               
               </div>
-              {/* Product Category Colors */}               
+                            {/* Product Category Colors */}
+                            
               <div>
-                {' '}
                                 
                 <h3 className="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">
-                                    Product Category                
-                </h3>{' '}
+                                    Product Category                 
+                </h3>
                                 
                 <div className="space-y-3">
-                                    
                   {productCategories.map((category) => (
                     <div
                       key={category.name}
                       className="flex items-center justify-between"
                     >
-                                            
                       <div className="flex items-center gap-2">
-                                                
                         <input
                           type="checkbox"
                           className="w-4 h-4 accent-red-500"
                         />
-                                                
+
                         <span className="text-sm text-gray-700">
-                                                    {category.name}
-                                                  
+                          {category.name}
                         </span>
-                                              
                       </div>
-                                            
+
                       <div
                         className={`w-5 h-5 rounded ${category.color}`}
                       ></div>
-                                          
                     </div>
                   ))}
-                                  
                 </div>
-                              
               </div>
-                            {/* Weight */}
-                            
+              {/* Weight */}
               <div>
-                                
                 <h3 className="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">
-                                    Weight                 
+                  Weight
                 </h3>
-                                
+
                 <div className="space-y-3">
-                                    
                   {weights.map((weight) => (
                     <label
                       key={weight.label}
                       className="flex items-center gap-2"
                     >
-                                            
                       <input
                         type="checkbox"
                         checked={selectedWeights.includes(weight.label)}
                         onChange={() => toggleWeight(weight.label)}
                         className="w-4 h-4 accent-red-500"
                       />
-                                            
+
                       <span className="text-sm text-gray-700">
-                                                {weight.label}
-                                              
+                        {weight.label}
                       </span>
-                                          
                     </label>
                   ))}
-                                  
                 </div>
-                              
               </div>
-                            {/* Product Tags */}
-                            
+              {/* Product Tags */}
               <div>
-                                
                 <h3 className="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">
-                                    Products Tags                 
+                  Products Tags
                 </h3>
-                                
+
                 <div className="flex flex-wrap gap-2">
-                                    
                   {tags.map((tag) => (
                     <button
                       key={tag.label}
@@ -284,17 +266,12 @@ const Product: React.FC = () => {
                           : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-red-500 hover:text-white'
                       }`}
                     >
-                                            {tag.label}
-                                          
+                      {tag.label}
                     </button>
                   ))}
-                                  
                 </div>
-                              
               </div>
-                          
             </div>
-                      
           </div>
 
           {/* Right Products Section */}
