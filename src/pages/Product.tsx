@@ -110,13 +110,20 @@ const Product: React.FC = () => {
       <div className="container mx-auto max-w-6xl  max-lg:px-6 ">
         <div className="grid grid-cols-12 gap-6">
           {/* Sidebar Filters */}
-          <div className="col-span-12 lg:col-span-3 space-y-5">
-            {/* All Categories */}
-            <div className="bg-white rounded-lg p-5 shadow-sm">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-gray-900">All</h3>
+          <div className="col-span-12 lg:col-span-3 space-y-6">
+                        {/* Main Wrapper */}
+                        
+            <div className="bg-gray-200 rounded-xl p-6 shadow-sm space-y-8">
+                            {/* Header + Clear */}
+                            
+              <div className="flex items-center justify-between border-b pb-3">
+                                
+                <h3 className="text-lg font-semibold text-gray-900">
+                                    Product Category                 
+                </h3>
+                                
                 <button
-                  className="text-sm text-gray-500"
+                  className="text-sm text-red-500 hover:underline"
                   onClick={() => {
                     setSelectedCategories([]);
                     setSelectedWeights([]);
@@ -124,137 +131,181 @@ const Product: React.FC = () => {
                     setPriceRange([0, 500]);
                   }}
                 >
-                  Clear
+                                    Clear                 
                 </button>
+                              
               </div>
-              <h3 className="font-bold text-gray-900 mb-3">Product Category</h3>
-              <div className="space-y-2">
+                            {/* Categories */}
+                            
+              <div className="space-y-3">
+                                
                 {categories.map((category) => (
                   <label
                     key={category.name}
                     className="flex items-center justify-between cursor-pointer"
                   >
-                    <div className="flex items-center">
+                                        
+                    <div className="flex items-center gap-2">
+                                            
                       <input
                         type="checkbox"
                         checked={selectedCategories.includes(category.name)}
                         onChange={() => toggleCategory(category.name)}
-                        className="w-4 h-4 text-red-500 rounded"
+                        className="w-4 h-4 accent-red-500"
                       />
-                      <span className="ml-2 text-sm text-gray-700">
-                        {category.name}
-                      </span>
-                    </div>
-                    <span className="text-xs text-gray-400">
-                      ({category.count})
-                    </span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            {/* Price Filter */}
-            <div className="bg-white rounded-lg p-5 shadow-sm">
-              <h3 className="font-bold text-gray-900 mb-4">Filter by Price</h3>
-              <input
-                type="range"
-                min={0}
-                max={500}
-                value={priceRange[1]}
-                onChange={(e) => setPriceRange([0, parseInt(e.target.value)])}
-                className="w-full h-1 bg-red-200 rounded-lg cursor-pointer appearance-none"
-                style={{
-                  background: `linear-gradient(to right, #ef4444 0%, #ef4444 ${
-                    ((priceRange[1] - 0) / (500 - 0)) * 100
-                  }%, #fee2e2 ${
-                    ((priceRange[1] - 0) / (500 - 0)) * 100
-                  }%, #fee2e2 100%)`,
-                }}
-              />
-              <div className="flex justify-between text-sm text-gray-700 mt-2">
-                <span>${priceRange[0]}</span>
-                <span>${priceRange[1]}</span>
-              </div>
-            </div>
-
-            {/* Product Category Colors */}
-            <div className="bg-white rounded-lg p-5 shadow-sm">
-              <h3 className="font-bold text-gray-900 mb-3">Product Category</h3>
-              <div className="space-y-2">
-                {productCategories.map((category) => (
-                  <label
-                    key={category.name}
-                    className="flex items-center justify-between cursor-pointer"
-                  >
-                    <div className="flex items-center">
-                      <div
-                        className={`w-3 h-3 rounded-full ${category.color} mr-2`}
-                      ></div>
+                                            
                       <span className="text-sm text-gray-700">
-                        {category.name}
+                                                {category.name}
+                                              
                       </span>
+                                          
                     </div>
+                                        
                     <span className="text-xs text-gray-400">
-                      ({category.count})
+                                            [{category.count}]
+                                          
                     </span>
+                                      
                   </label>
                 ))}
+                              
               </div>
-            </div>
-
-            {/* Weight */}
-            <div className="bg-white rounded-lg p-5 shadow-sm">
-              <h3 className="font-bold text-gray-900 mb-3">Weight</h3>
-              <div className="space-y-2">
-                {weights.map((weight) => (
-                  <label
-                    key={weight.label}
-                    className="flex items-center justify-between cursor-pointer"
-                  >
-                    <div className="flex items-center">
+                            {/* Filter By Price */}
+                            
+              <div>
+                                
+                <h3 className="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">
+                                    Filter By Price                 
+                </h3>
+                                
+                <input
+                  type="range"
+                  min={0}
+                  max={500}
+                  value={priceRange[1]}
+                  onChange={(e) => setPriceRange([0, parseInt(e.target.value)])}
+                  className="w-full accent-red-500"
+                />
+                                
+                <p className="mt-3 font-semibold text-sm">
+                                    Price :                   
+                  <span className="text-gray-600">
+                                        ${priceRange[0]} - ${priceRange[1]}
+                                      
+                  </span>
+                                  
+                </p>
+                                
+                <button className="mt-4 w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-md transition">
+                                    Filter                 
+                </button>
+                              
+              </div>
+                            {/* Product Category Colors */}
+                            
+              <div>
+                                
+                <h3 className="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">
+                                    Product Category                 
+                </h3>
+                                
+                <div className="space-y-3">
+                                    
+                  {productCategories.map((category) => (
+                    <div
+                      key={category.name}
+                      className="flex items-center justify-between"
+                    >
+                                            
+                      <div className="flex items-center gap-2">
+                                                
+                        <input
+                          type="checkbox"
+                          className="w-4 h-4 accent-red-500"
+                        />
+                                                
+                        <span className="text-sm text-gray-700">
+                                                    {category.name}
+                                                  
+                        </span>
+                                              
+                      </div>
+                                            
+                      <div
+                        className={`w-5 h-5 rounded ${category.color}`}
+                      ></div>
+                                          
+                    </div>
+                  ))}
+                                  
+                </div>
+                              
+              </div>
+                            {/* Weight */}
+                            
+              <div>
+                                
+                <h3 className="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">
+                                    Weight                 
+                </h3>
+                                
+                <div className="space-y-3">
+                                    
+                  {weights.map((weight) => (
+                    <label
+                      key={weight.label}
+                      className="flex items-center gap-2"
+                    >
+                                            
                       <input
                         type="checkbox"
                         checked={selectedWeights.includes(weight.label)}
                         onChange={() => toggleWeight(weight.label)}
-                        className="w-4 h-4 text-red-500 rounded"
+                        className="w-4 h-4 accent-red-500"
                       />
-                      <span className="ml-2 text-sm text-gray-700">
-                        {weight.label}
+                                            
+                      <span className="text-sm text-gray-700">
+                                                {weight.label}
+                                              
                       </span>
-                    </div>
-                    <span className="text-xs text-gray-400">
-                      ({weight.count})
-                    </span>
-                  </label>
-                ))}
+                                          
+                    </label>
+                  ))}
+                                  
+                </div>
+                              
               </div>
-            </div>
-
-            {/* Tags */}
-            <div className="bg-white rounded-lg p-5 shadow-sm">
-              <h3 className="font-bold text-gray-900 mb-3">Product Tags</h3>
-              <div className="space-y-2">
-                {tags.map((tag) => (
-                  <label
-                    key={tag.label}
-                    className="flex items-center justify-between cursor-pointer"
-                  >
-                    <div className="flex items-center">
-                      <input
-                        type="checkbox"
-                        checked={selectedTags.includes(tag.label)}
-                        onChange={() => toggleTag(tag.label)}
-                        className="w-4 h-4 text-red-500 rounded"
-                      />
-                      <span className="ml-2 text-sm text-gray-700">
-                        {tag.label}
-                      </span>
-                    </div>
-                    <span className="text-xs text-gray-400">({tag.count})</span>
-                  </label>
-                ))}
+                            {/* Product Tags */}
+                            
+              <div>
+                                
+                <h3 className="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">
+                                    Products Tags                 
+                </h3>
+                                
+                <div className="flex flex-wrap gap-2">
+                                    
+                  {tags.map((tag) => (
+                    <button
+                      key={tag.label}
+                      onClick={() => toggleTag(tag.label)}
+                      className={`px-3 py-1 text-sm rounded-md border transition ${
+                        selectedTags.includes(tag.label)
+                          ? 'bg-red-500 text-white border-red-500'
+                          : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-red-500 hover:text-white'
+                      }`}
+                    >
+                                            {tag.label}
+                                          
+                    </button>
+                  ))}
+                                  
+                </div>
+                              
               </div>
+                          
             </div>
+                      
           </div>
 
           {/* Right Products Section */}

@@ -1,18 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
-import { MOCK_PRODUCTS } from '../utils/constant';
-import { useAppDispatch } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { addToCart } from '../feature/cart/cartSlice';
 import { addToWishlist } from '../feature/wishlist/wishlistSlice';
+import { fetchProducts } from '../feature/product/productsSlice';
 
 const ProductDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const { products, loading } = useAppSelector((state) => state.products);
+
   const [quantity, setQuantity] = useState(1);
 
-  const product = MOCK_PRODUCTS.find((p) => p.id === id);
+  // 🔥 Fetch products if page refreshed
+  useEffect(() => {
+    if (products.length === 0) {
+      dispatch(fetchProducts());
+    }
+  }, [dispatch, products.length]);
+
+  // 🔥 IMPORTANT: match correct id field
+  const product = products.find((p) => p.id === id);
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-16 text-center">
+        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -56,6 +75,7 @@ const ProductDetails: React.FC = () => {
         {/* Product Info */}
         <div>
           <div className="text-sm text-gray-500 mb-2">{product.category}</div>
+
           <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
 
           <div className="flex items-center mb-4">
@@ -111,6 +131,7 @@ const ProductDetails: React.FC = () => {
             <Button size="lg" onClick={handleAddToCart} className="flex-1">
               Add to Cart
             </Button>
+
             <Button size="lg" variant="outline" onClick={handleAddToWishlist}>
               ❤️ Wishlist
             </Button>
