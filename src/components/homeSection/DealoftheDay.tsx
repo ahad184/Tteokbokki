@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
 import { addToCart } from '../../feature/cart/cartSlice';
+import { LuShoppingCart } from 'react-icons/lu';
 
 interface Deal {
   id: string;
@@ -192,20 +193,8 @@ const DealsOfTheDay: React.FC<DealsOfTheDayProps> = ({ deals }) => {
           flex items-center gap-2 shadow-sm
         "
                   >
+                    <LuShoppingCart />
                     Add
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 4v16m8-8H4"
-                      />
-                    </svg>
                   </button>
                 </div>
               </div>

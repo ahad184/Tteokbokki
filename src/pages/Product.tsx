@@ -1,28 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { fetchProducts } from '../feature/product/productsSlice';
 import { addToCart } from '../feature/cart/cartSlice';
-import { MdOutlineShoppingBag } from 'react-icons/md';
 import { RiGridLine } from 'react-icons/ri';
 import { TfiLayoutListThumb } from 'react-icons/tfi';
+
+import ProductFilters from '../components/product/ProductFilter';
+
+import ProductCard from '../components/product/ProductCard';
+import Pagination from '../components/product/Pagination';
 
 const Product: React.FC = () => {
   const dispatch = useAppDispatch();
   const { products, loading } = useAppSelector((state) => state.products);
+
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedWeights, setSelectedWeights] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState('featured');
   const [currentPage, setCurrentPage] = useState(1);
+
   const itemsPerPage = 9;
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  // Example filter data
+  // Dummy filter data (same as before)
   const categories = [
     { name: 'Milk & Drinks', count: 120 },
     { name: 'Diary & Milk', count: 143 },
@@ -75,230 +80,91 @@ const Product: React.FC = () => {
     dispatch(addToCart(product));
   };
 
-  // Filtering logic
+  // const clearAll = () => {
+  //   setSelectedCategories([]);
+  //   setSelectedWeights([]);
+  //   setSelectedTags([]);
+  //   setPriceRange([0, 500]);
+  // };
+
+  // Filtering
   const filteredProducts = products
-    .filter((p) => p.price >= priceRange[0] && p.price <= priceRange[1])
+    .filter((p: any) => p.price >= priceRange[0] && p.price <= priceRange[1])
     .filter(
-      (p) =>
+      (p: any) =>
         selectedCategories.length === 0 ||
         selectedCategories.includes(p.category),
     )
-    // .filter((p) => selectedWeights.length === 0 || selectedWeights.includes(p.weight))
     .filter(
-      (p) =>
+      (p: any) =>
         selectedTags.length === 0 ||
         selectedTags.some((tag) => p.tags?.includes(tag)),
     );
 
-  // Sorting logic
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
+  // Sorting
+  const sortedProducts = [...filteredProducts].sort((a: any, b: any) => {
     if (sortBy === 'price-low') return a.price - b.price;
     if (sortBy === 'price-high') return b.price - a.price;
-    // if (sortBy === 'newest') return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-    return 0; // featured
+    return 0;
   });
 
   // Pagination
   const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
+
   const paginatedProducts = sortedProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
 
   return (
-    <div className=" font-poppins min-h-screen py-8">
-      <div className="container mx-auto max-w-6xl  max-lg:px-6 ">
+    <div className="font-poppins min-h-screen py-8">
+      <div className="container mx-auto max-w-6xl max-lg:px-6">
         <div className="grid grid-cols-12 gap-6">
-          {/* Sidebar Filters */}
-
+          {/* Sidebar */}
           <div className="col-span-12 lg:col-span-3 space-y-6">
-            {/* Main Wrapper */}
-
-            <div className="bg-gray-200 rounded-xl p-6 shadow-sm space-y-8">
-              {/* Header + Clear */}
-              <div className="flex items-center justify-between border-b pb-3">
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Product Category
-                </h3>
-                                
-                <button
-                  className="text-sm text-red-500 hover:underline"
-                  onClick={() => {
-                    setSelectedCategories([]);
-                    setSelectedWeights([]);
-                    setSelectedTags([]);
-                    setPriceRange([0, 500]);
-                  }}
-                >
-                                    Clear                 
-                </button>
-                              
-              </div>
-              {/* Categories */}
-              <div className="space-y-3">
-                {categories.map((category) => (
-                  <label
-                    key={category.name}
-                    className="flex items-center justify-between cursor-pointer"
-                  >
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={selectedCategories.includes(category.name)}
-                        onChange={() => toggleCategory(category.name)}
-                        className="w-4 h-4 accent-red-500"
-                      />
-
-                      <span className="text-sm text-gray-700">
-                        {category.name}
-                      </span>
-                    </div>
-
-                    <span className="text-xs text-gray-400">
-                      [{category.count}]
-                    </span>
-                  </label>
-                ))}
-              </div>
-                            {/* Filter By Price */}
-                            
-              <div>
-                                
-                <h3 className="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">
-                                    Filter By Price                 
-                </h3>
-                                
-                <input
-                  type="range"
-                  min={0}
-                  max={500}
-                  value={priceRange[1]}
-                  onChange={(e) => setPriceRange([0, parseInt(e.target.value)])}
-                  className="w-full accent-red-500"
-                />
-                                
-                <p className="mt-3 font-semibold text-sm">
-                  Price :
-                  <span className="text-gray-600">
-                                        ${priceRange[0]} - ${priceRange[1]}
-                                      
-                  </span>
-                                  
-                </p>
-                                
-                <button className="mt-4 w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-md transition">
-                                    Filter                 
-                </button>
-                              
-              </div>
-                            {/* Product Category Colors */}
-                            
-              <div>
-                                
-                <h3 className="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">
-                                    Product Category                 
-                </h3>
-                                
-                <div className="space-y-3">
-                  {productCategories.map((category) => (
-                    <div
-                      key={category.name}
-                      className="flex items-center justify-between"
-                    >
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          className="w-4 h-4 accent-red-500"
-                        />
-
-                        <span className="text-sm text-gray-700">
-                          {category.name}
-                        </span>
-                      </div>
-
-                      <div
-                        className={`w-5 h-5 rounded ${category.color}`}
-                      ></div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              {/* Weight */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">
-                  Weight
-                </h3>
-
-                <div className="space-y-3">
-                  {weights.map((weight) => (
-                    <label
-                      key={weight.label}
-                      className="flex items-center gap-2"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={selectedWeights.includes(weight.label)}
-                        onChange={() => toggleWeight(weight.label)}
-                        className="w-4 h-4 accent-red-500"
-                      />
-
-                      <span className="text-sm text-gray-700">
-                        {weight.label}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-              {/* Product Tags */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 border-b pb-3 mb-4">
-                  Products Tags
-                </h3>
-
-                <div className="flex flex-wrap gap-2">
-                  {tags.map((tag) => (
-                    <button
-                      key={tag.label}
-                      onClick={() => toggleTag(tag.label)}
-                      className={`px-3 py-1 text-sm rounded-md border transition ${
-                        selectedTags.includes(tag.label)
-                          ? 'bg-red-500 text-white border-red-500'
-                          : 'bg-gray-100 text-gray-600 border-gray-200 hover:bg-red-500 hover:text-white'
-                      }`}
-                    >
-                      {tag.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <ProductFilters
+              categories={categories}
+              productCategories={productCategories}
+              weights={weights}
+              tags={tags}
+              selectedCategories={selectedCategories}
+              selectedWeights={selectedWeights}
+              selectedTags={selectedTags}
+              priceRange={priceRange}
+              toggleCategory={toggleCategory}
+              toggleWeight={toggleWeight}
+              toggleTag={toggleTag}
+              setPriceRange={setPriceRange}
+              // clearAll={clearAll}
+            />
           </div>
 
-          {/* Right Products Section */}
+          {/* Products Section */}
           <div className="col-span-12 lg:col-span-9">
-            {/* Header */}
+            {/* Header */}{' '}
             <div className="flex justify-between items-center mb-8 bg-gray-100 p-4 rounded-lg">
+              {' '}
               <div className="text-sm text-gray-600 font-medium flex items-center">
-                <RiGridLine />
-                <TfiLayoutListThumb />
-                We found {filteredProducts.length} items for you!
-              </div>
+                {' '}
+                <RiGridLine /> <TfiLayoutListThumb /> We found{' '}
+                {filteredProducts.length} items for you!{' '}
+              </div>{' '}
               <div className="flex items-center gap-3">
-                <span className="text-sm text-gray-600">Sort By :</span>
+                {' '}
+                <span className="text-sm text-gray-600">Sort By :</span>{' '}
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
                   className="border border-gray-300 bg-white rounded px-3 py-1.5 text-sm focus:outline-none"
                 >
-                  <option value="featured">Featured</option>
-                  <option value="price-low">Price: Low to High</option>
-                  <option value="price-high">Price: High to Low</option>
-                  <option value="newest">Newest</option>
-                </select>
-              </div>
+                  {' '}
+                  <option value="featured">Featured</option>{' '}
+                  <option value="price-low">Price: Low to High</option>{' '}
+                  <option value="price-high">Price: High to Low</option>{' '}
+                  <option value="newest">Newest</option>{' '}
+                </select>{' '}
+              </div>{' '}
             </div>
-
-            {/* Products Grid */}
             {loading ? (
               <div className="text-center py-12">
                 <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
@@ -306,113 +172,20 @@ const Product: React.FC = () => {
             ) : (
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                  {paginatedProducts.map((product) => (
-                    <div
+                  {paginatedProducts.map((product: any) => (
+                    <ProductCard
                       key={product.id}
-                      className="overflow-hidden rounded-md border border-slate-200 bg-white p-2"
-                    >
-                      {/* Product Image */}
-
-                      <div className=" relative border rounded-md bg-gray-100 p-6 h-56 flex  justify-center">
-                        <img
-                          src={product.image}
-                          alt={product.name}
-                          className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-300"
-                        />
-                        <div className="cursor-pointer bg-gray-100 absolute p-1 -bottom-3 border rounded-full">
-                          <MdOutlineShoppingBag
-                            className="text-base text-[#64B496]"
-                            onClick={() => handleAddToCart(product)}
-                          />
-                        </div>
-                      </div>
-
-                      {/* Product Info */}
-                      <div className="p-4 flex flex-col items-center">
-                        <p className="text-xs text-gray-500 mb-1">
-                          {product.category}
-                        </p>
-                        {/* Rating */}
-                        <div className="flex items-center gap-1 mb-2">
-                          {[...Array(5)].map((_, i) => (
-                            <svg
-                              key={i}
-                              className={`w-3.5 h-3.5 ${
-                                i < Math.floor(product.rating)
-                                  ? 'text-yellow-400 fill-current'
-                                  : 'text-gray-300'
-                              }`}
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-                              />
-                            </svg>
-                          ))}
-                          <span className="text-sm font-medium text-gray-700">
-                            ({product.rating.toFixed(1)})
-                          </span>
-                        </div>
-                        <Link to={`/products/${product.id}`}>
-                          <h3
-                            className="font-medium text-[15px] leading-[24px] tracking-[0.48px]
-                                    text-center text-gray-900 mb-2 line-clamp-2 min-h-[48px] hover:text-red-500 transition"
-                          >
-                            {product.description}
-                          </h3>
-                        </Link>
-
-                        {/* Price */}
-                        <div className="flex items-baseline gap-2 ">
-                          <span className="text-red-500 text-lg font-bold">
-                            ${product.price.toFixed(2)}
-                          </span>
-                          <span className="text-gray-400 text-sm line-through">
-                            ${(product.price * 1.2).toFixed(2)}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+                      product={product}
+                      addToCart={handleAddToCart}
+                    />
                   ))}
                 </div>
 
-                {/* Pagination */}
-                <div className="text-base font-normal flex justify-center items-center  mt-8">
-                  <button
-                    onClick={() =>
-                      setCurrentPage((prev) => Math.max(prev - 1, 1))
-                    }
-                    className="px-3 py-1.5 border border-gray-300  hover:bg-gray-50 "
-                  >
-                    Previous
-                  </button>
-                  {Array.from({ length: totalPages }, (_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setCurrentPage(i + 1)}
-                      className={`px-3 py-1.5 border border-gray-300  ${
-                        currentPage === i + 1
-                          ? 'bg-red-500  text-white'
-                          : ' hover:bg-gray-50'
-                      }`}
-                    >
-                      {i + 1}
-                    </button>
-                  ))}
-                  <button
-                    onClick={() =>
-                      setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                    }
-                    className="px-3 py-1.5 border border-gray-300  hover:bg-gray-50 "
-                  >
-                    Next
-                  </button>
-                </div>
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  setCurrentPage={setCurrentPage}
+                />
               </>
             )}
           </div>

@@ -1,7 +1,7 @@
-import React from "react";
-import { FiShoppingBag } from "react-icons/fi";
-import { useAppDispatch } from "../../app/hooks";
-import { addToCart } from "../../feature/cart/cartSlice";
+import React from 'react';
+import { FiShoppingBag } from 'react-icons/fi';
+import { useAppDispatch } from '../../app/hooks';
+import { addToCart } from '../../feature/cart/cartSlice';
 
 const money = (n: number) => `$${Number(n).toFixed(2)}`;
 
@@ -25,44 +25,44 @@ const PopularProductsSection: React.FC<PopularDeals> = ({ populars }) => {
 
   const popularProducts: Popular[] = [
     {
-      id: "p1",
-      name: "Best snacks with hazel nut mix pack 200gm",
-      category: "Snacks",
+      id: 'p1',
+      name: 'Best snacks with hazel nut mix pack 200gm',
+      category: 'Snacks',
       rating: 4.5,
       price: 120.25,
       oldPrice: 123.25,
-      image: "/assets/products/prod_2.png",
-      description: "A mix of hazel nuts and snacks, perfect for snacking.",
+      image: '/assets/products/prod_2.png',
+      description: 'A mix of hazel nuts and snacks, perfect for snacking.',
     },
     {
-      id: "p2",
-      name: "Sweet snacks crunchy nut mix 250gm pack",
-      category: "Snacks",
+      id: 'p2',
+      name: 'Sweet snacks crunchy nut mix 250gm pack',
+      category: 'Snacks',
       rating: 5.0,
       price: 100.0,
       oldPrice: 110.0,
-      image: "/assets/products/prod_1.png",
-      description: "Crunchy nut mix, packed with sweetness and flavor.",
+      image: '/assets/products/prod_1.png',
+      description: 'Crunchy nut mix, packed with sweetness and flavor.',
     },
     {
-      id: "p3",
-      name: "Best snacks with hazel nut mix pack 200gm",
-      category: "Snacks",
+      id: 'p3',
+      name: 'Best snacks with hazel nut mix pack 200gm',
+      category: 'Snacks',
       rating: 4.5,
       price: 120.25,
       oldPrice: 123.25,
-      image: "/assets/products/prod_5.png",
-      description: "A mix of hazel nuts and snacks, perfect for snacking.",
+      image: '/assets/products/prod_5.png',
+      description: 'A mix of hazel nuts and snacks, perfect for snacking.',
     },
     {
-      id: "p4",
-      name: "Sweet snacks crunchy nut mix 250gm pack",
-      category: "Snacks",
+      id: 'p4',
+      name: 'Sweet snacks crunchy nut mix 250gm pack',
+      category: 'Snacks',
       rating: 5.0,
       price: 100.0,
       oldPrice: 110.0,
-      image: "/assets/products/prod_13.png",
-      description: "Crunchy nut mix, packed with sweetness and flavor.",
+      image: '/assets/products/prod_13.png',
+      description: 'Crunchy nut mix, packed with sweetness and flavor.',
     },
   ];
 
@@ -75,7 +75,7 @@ const PopularProductsSection: React.FC<PopularDeals> = ({ populars }) => {
       description: popular.description,
       price: popular.price,
       image: popular.image,
-      category: "Deals",
+      category: 'Deals',
       rating: popular.rating,
       stock: 100,
     };
@@ -83,7 +83,7 @@ const PopularProductsSection: React.FC<PopularDeals> = ({ populars }) => {
   };
 
   return (
-    <section className="bg-[#fafafa]">
+    <section className="my-14">
       <div className="text-center">
         <h2 className="text-3xl font-semibold text-slate-800">
           Popular Products
@@ -140,7 +140,7 @@ const PopularProductsSection: React.FC<PopularDeals> = ({ populars }) => {
                 <span className="text-sm font-semibold text-[#ff4c3b]">
                   {money(p.price)}
                 </span>
-                {typeof p.oldPrice === "number" && (
+                {typeof p.oldPrice === 'number' && (
                   <span className="text-xs text-slate-400 line-through">
                     {money(p.oldPrice)}
                   </span>
