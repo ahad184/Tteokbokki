@@ -26,7 +26,7 @@ const DealsOfTheDay: React.FC<DealsOfTheDayProps> = ({ deals }) => {
   // Default deals data
   const defaultDeals: Deal[] = [
     {
-      id: '1',
+      id: 'B1',
       name: 'Seeds of Change Organic Quinoa, Brown, & Red Rice',
       rating: 1,
       reviewCount: 3,
@@ -37,7 +37,7 @@ const DealsOfTheDay: React.FC<DealsOfTheDayProps> = ({ deals }) => {
       discount: 3,
     },
     {
-      id: '2',
+      id: 'B2',
       name: 'Perdue Simply Smart Organics Gluten Free',
       rating: 1,
       reviewCount: 3,
@@ -48,7 +48,7 @@ const DealsOfTheDay: React.FC<DealsOfTheDayProps> = ({ deals }) => {
       discount: 7,
     },
     {
-      id: '3',
+      id: 'B3',
       name: 'Signature Wood-Fired Mushroom and Caramelized',
       rating: 1,
       reviewCount: 3,
@@ -59,7 +59,7 @@ const DealsOfTheDay: React.FC<DealsOfTheDayProps> = ({ deals }) => {
       discount: 7,
     },
     {
-      id: '4',
+      id: 'B4',
       name: 'Simply Lemonade with Raspberry Juice',
       rating: 1,
       reviewCount: 3,

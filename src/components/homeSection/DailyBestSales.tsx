@@ -29,7 +29,7 @@ const DailyBestSells: React.FC = () => {
   // Mock products data
   const products: Product[] = [
     {
-      id: '1',
+      id: 'BS1',
       name: 'All Natural Italian-Style Chicken Meatballs',
       category: 'Hodo Foods',
       price: 238.85,
@@ -42,7 +42,7 @@ const DailyBestSells: React.FC = () => {
       badge: 'Best Sale',
     },
     {
-      id: '2',
+      id: 'BS2',
       name: "Angie's Boomchickapop Sweet and salty",
       category: 'Hodo Foods',
       price: 238.85,
@@ -55,7 +55,7 @@ const DailyBestSells: React.FC = () => {
       badge: 'Sale',
     },
     {
-      id: '3',
+      id: 'BS3',
       name: 'Foster Farms Takeout Crispy Classic',
       category: 'Hodo Foods',
       price: 238.85,
@@ -68,7 +68,7 @@ const DailyBestSells: React.FC = () => {
       badge: 'Best Sale',
     },
     {
-      id: '4',
+      id: 'BS4',
       name: 'Blue Diamond Almonds Lightly Salted',
       category: 'Hodo Foods',
       price: 238.85,

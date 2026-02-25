@@ -25,7 +25,7 @@ const StandoutDishes: React.FC<StandoutDishesProps> = ({ dishes }) => {
   // Default dishes data
   const defaultDishes: Dish[] = [
     {
-      id: '1',
+      id: 'S1',
       name: 'Fattoush salad',
       description: 'Description of the item',
       image:
@@ -34,7 +34,7 @@ const StandoutDishes: React.FC<StandoutDishesProps> = ({ dishes }) => {
       price: 12.99,
     },
     {
-      id: '2',
+      id: 'S2',
       name: 'Vegetable salad',
       description: 'Description of the item',
       image:
@@ -43,7 +43,7 @@ const StandoutDishes: React.FC<StandoutDishesProps> = ({ dishes }) => {
       price: 10.99,
     },
     {
-      id: '3',
+      id: 'S3',
       name: 'Egg vegi salad',
       description: 'Description of the item',
       image: 'https://images.unsplash.com/photo-1546793665-c74683f339c1?w=500',
@@ -51,7 +51,7 @@ const StandoutDishes: React.FC<StandoutDishesProps> = ({ dishes }) => {
       price: 13.99,
     },
     {
-      id: '4',
+      id: 'S4',
       name: 'Caesar salad',
       description: 'Description of the item',
       image: 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=500',
