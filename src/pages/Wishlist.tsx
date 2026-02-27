@@ -1,22 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAppSelector, useAppDispatch } from '../app/hooks';
-import { removeFromWishlist } from '../feature/wishlist/wishlistSlice';
-import { addToCart } from '../feature/cart/cartSlice';
+import { useAppSelector } from '../app/hooks';
+import { usePersistence } from '../hooks/usePersistence';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 
 const Wishlist: React.FC = () => {
-  const dispatch = useAppDispatch();
+  const { handleAddToCart, handleRemoveFromWishlist } = usePersistence();
   const wishlistItems = useAppSelector((state) => state.wishlist.items);
 
-  const handleRemove = (id: string) => {
-    dispatch(removeFromWishlist(id));
+  const handleRemove = async (id: string, dbId?: string) => {
+    handleRemoveFromWishlist(id, dbId);
   };
 
-  const handleAddToCart = (product: (typeof wishlistItems)[0]) => {
-    dispatch(addToCart(product));
-    dispatch(removeFromWishlist(product.id));
+  const onAddToCart = async (product: (typeof wishlistItems)[0]) => {
+    await handleAddToCart(product);
+    handleRemoveFromWishlist(product.id, product._dbId);
   };
 
   if (wishlistItems.length === 0) {
@@ -64,14 +63,14 @@ const Wishlist: React.FC = () => {
                 <Button
                   size="sm"
                   className="flex-1"
-                  onClick={() => handleAddToCart(item)}
+                  onClick={() => onAddToCart(item)}
                 >
                   Add to Cart
                 </Button>
                 <Button
                   size="sm"
                   variant="danger"
-                  onClick={() => handleRemove(item.id)}
+                  onClick={() => handleRemove(item.id, item._dbId)}
                 >
                   Remove
                 </Button>

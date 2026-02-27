@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useAppDispatch } from '../../app/hooks';
-import { addToCart } from '../../feature/cart/cartSlice';
+import { usePersistence } from '../../hooks/usePersistence';
 import { IoMdArrowForward } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import { LuShoppingCart } from 'react-icons/lu';
@@ -21,7 +20,7 @@ interface Product {
 }
 
 const DailyBestSells: React.FC = () => {
-  const dispatch = useAppDispatch();
+  const { handleAddToCart: addToCartWithPersistence } = usePersistence();
   const [activeTab, setActiveTab] = useState<'featured' | 'popular' | 'new'>(
     'featured',
   );
@@ -29,7 +28,7 @@ const DailyBestSells: React.FC = () => {
   // Mock products data
   const products: Product[] = [
     {
-      id: '1',
+      id: '65e1c1b2a3d4f5e6a7b8c9d0',
       name: 'All Natural Italian-Style Chicken Meatballs',
       category: 'Hodo Foods',
       price: 238.85,
@@ -42,7 +41,7 @@ const DailyBestSells: React.FC = () => {
       badge: 'Best Sale',
     },
     {
-      id: '2',
+      id: '65e1c1b2a3d4f5e6a7b8c9d1',
       name: "Angie's Boomchickapop Sweet and salty",
       category: 'Hodo Foods',
       price: 238.85,
@@ -55,7 +54,7 @@ const DailyBestSells: React.FC = () => {
       badge: 'Sale',
     },
     {
-      id: '3',
+      id: '65e1c1b2a3d4f5e6a7b8c9d2',
       name: 'Foster Farms Takeout Crispy Classic',
       category: 'Hodo Foods',
       price: 238.85,
@@ -68,7 +67,7 @@ const DailyBestSells: React.FC = () => {
       badge: 'Best Sale',
     },
     {
-      id: '4',
+      id: '65e1c1b2a3d4f5e6a7b8c9d3',
       name: 'Blue Diamond Almonds Lightly Salted',
       category: 'Hodo Foods',
       price: 238.85,
@@ -93,7 +92,7 @@ const DailyBestSells: React.FC = () => {
       rating: product.rating,
       stock: product.totalStock,
     };
-    dispatch(addToCart(cartItem));
+    addToCartWithPersistence(cartItem);
   };
 
   const getBadgeColor = (badge: string) => {
@@ -277,10 +276,17 @@ const DailyBestSells: React.FC = () => {
 
                   {/* Add to Cart Button */}
                   <button
-                    onClick={() => handleAddToCart(product)}
-                    className="w-full bg-red-500 hover:bg-red-600 flex justify-center items-center gap-1 text-white py-2.5 rounded-md font-medium transition"
+                    onClick={() => {
+                      if (product.totalStock <= product.soldCount) {
+                        window.alert("This product is out of stock.");
+                      } else {
+                        handleAddToCart(product);
+                      }
+                    }}
+                    className={`w-full flex justify-center items-center gap-1 text-white py-2.5 rounded-md font-medium transition ${product.totalStock <= product.soldCount ? 'bg-gray-400 cursor-not-allowed' : 'bg-red-500 hover:bg-red-600'}`}
+                    disabled={product.totalStock <= product.soldCount}
                   >
-                    <LuShoppingCart className="text-xl" /> Add To Cart
+                    <LuShoppingCart className="text-xl" /> {product.totalStock <= product.soldCount ? 'Out of Stock' : 'Add To Cart'}
                   </button>
                 </div>
               </div>

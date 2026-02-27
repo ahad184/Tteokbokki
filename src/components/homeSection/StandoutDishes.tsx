@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useAppDispatch } from '../../app/hooks';
-import { toggleWishlist } from '../../feature/wishlist/wishlistSlice';
+import { usePersistence } from '../../hooks/usePersistence';
 import { FaHeart } from 'react-icons/fa';
 import { FaRegHeart } from 'react-icons/fa';
 
@@ -18,7 +17,6 @@ interface StandoutDishesProps {
 }
 
 const StandoutDishes: React.FC<StandoutDishesProps> = ({ dishes }) => {
-  const dispatch = useAppDispatch();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
 
@@ -72,7 +70,9 @@ const StandoutDishes: React.FC<StandoutDishesProps> = ({ dishes }) => {
     setCurrentIndex((prev) => Math.min(maxIndex, prev + 1));
   };
 
-  const toggleFavorite = (dishId: string) => {
+  const { handleToggleWishlist: toggleWishlistWithPersistence } = usePersistence();
+
+  const toggleFavorite = async (dishId: string) => {
     const dish = displayDishes.find((d) => d.id === dishId);
     if (!dish) return;
 
@@ -84,19 +84,18 @@ const StandoutDishes: React.FC<StandoutDishesProps> = ({ dishes }) => {
       newFavorites.add(dishId);
     }
     setFavorites(newFavorites);
-    // Sync with Redux using toggleWishlist
-    dispatch(
-      toggleWishlist({
-        id: dish.id,
-        name: dish.name,
-        description: dish.description,
-        price: dish.price || 0,
-        image: dish.image,
-        category: dish.category || 'Menu',
-        rating: 4.5,
-        stock: 100,
-      }),
-    );
+
+    // Sync with DB/Redux via persistence hook
+    await toggleWishlistWithPersistence({
+      id: dish.id,
+      name: dish.name,
+      description: dish.description,
+      price: dish.price || 0,
+      image: dish.image,
+      category: dish.category || 'Menu',
+      rating: 4.5,
+      stock: 100,
+    });
   };
 
   const visibleDishes = displayDishes.slice(

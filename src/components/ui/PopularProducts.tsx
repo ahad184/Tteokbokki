@@ -1,7 +1,6 @@
 import React from "react";
 import { FiShoppingBag } from "react-icons/fi";
-import { useAppDispatch } from "../../app/hooks";
-import { addToCart } from "../../feature/cart/cartSlice";
+import { usePersistence } from "../../hooks/usePersistence";
 
 const money = (n: number) => `$${Number(n).toFixed(2)}`;
 
@@ -21,11 +20,10 @@ interface PopularDeals {
 }
 
 const PopularProductsSection: React.FC<PopularDeals> = ({ populars }) => {
-  const dispatch = useAppDispatch();
 
   const popularProducts: Popular[] = [
     {
-      id: "p1",
+      id: "65e1c1b2a3d4f5e6a7b8c9d4",
       name: "Best snacks with hazel nut mix pack 200gm",
       category: "Snacks",
       rating: 4.5,
@@ -35,7 +33,7 @@ const PopularProductsSection: React.FC<PopularDeals> = ({ populars }) => {
       description: "A mix of hazel nuts and snacks, perfect for snacking.",
     },
     {
-      id: "p2",
+      id: "65e1c1b2a3d4f5e6a7b8c9d5",
       name: "Sweet snacks crunchy nut mix 250gm pack",
       category: "Snacks",
       rating: 5.0,
@@ -45,7 +43,7 @@ const PopularProductsSection: React.FC<PopularDeals> = ({ populars }) => {
       description: "Crunchy nut mix, packed with sweetness and flavor.",
     },
     {
-      id: "p3",
+      id: "65e1c1b2a3d4f5e6a7b8c9d6",
       name: "Best snacks with hazel nut mix pack 200gm",
       category: "Snacks",
       rating: 4.5,
@@ -55,7 +53,7 @@ const PopularProductsSection: React.FC<PopularDeals> = ({ populars }) => {
       description: "A mix of hazel nuts and snacks, perfect for snacking.",
     },
     {
-      id: "p4",
+      id: "65e1c1b2a3d4f5e6a7b8c9d7",
       name: "Sweet snacks crunchy nut mix 250gm pack",
       category: "Snacks",
       rating: 5.0,
@@ -68,7 +66,9 @@ const PopularProductsSection: React.FC<PopularDeals> = ({ populars }) => {
 
   const displayPopular = populars || popularProducts;
 
-  const handleAddtoCart = (popular: Popular) => {
+  const { handleAddToCart: addToCartWithPersistence } = usePersistence();
+
+  const handleAddtoCart = async (popular: Popular) => {
     const cartItem = {
       id: popular.id,
       name: popular.name,
@@ -79,7 +79,7 @@ const PopularProductsSection: React.FC<PopularDeals> = ({ populars }) => {
       rating: popular.rating,
       stock: 100,
     };
-    dispatch(addToCart(cartItem));
+    await addToCartWithPersistence(cartItem);
   };
 
   return (

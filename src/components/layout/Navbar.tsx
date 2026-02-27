@@ -1,21 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { logout } from "../../feature/auth/authSlice";
+import { useAppSelector } from "../../app/hooks";
 import { FiShoppingCart } from "react-icons/fi";
 import { CiHeart } from "react-icons/ci";
 import { IoPersonOutline } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 
 const Navbar: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
   const cartItems = useAppSelector((state) => state.cart.items);
   const wishlistItems = useAppSelector((state) => state.wishlist.items);
-
-  const handleLogout = () => {
-    dispatch(logout());
-  };
 
   return (
     <nav className="bg-white text-black shadow-lg">
@@ -45,22 +39,18 @@ const Navbar: React.FC = () => {
               </button>
             </div>
           </div>
-          <div className="flex items-center space-x-4">
-            {isAuthenticated ? (
-              <>
-                <span className="text-sm">{user?.name}</span>
-                <button onClick={handleLogout} className="hover:text-red-500">
-                  Logout
-                </button>
-              </>
-            ) : (
-              <Link to="/login" className="hover:text-red-500">
-                <div className="flex items-center gap-1">
-                  <IoPersonOutline />
-                  <p className="text-sm font-medium">Account</p>
-                </div>
-              </Link>
-            )}
+            <div className="flex items-center space-x-4">
+              <SignedOut>
+                <Link to="/login" className="hover:text-red-500">
+                  <div className="flex items-center gap-1">
+                    <IoPersonOutline />
+                    <p className="text-sm font-medium">Account</p>
+                  </div>
+                </Link>
+              </SignedOut>
+              <SignedIn>
+                <UserButton afterSignOutUrl="/" />
+              </SignedIn>
             <Link to="/wishlist" className="hover:text-red-500 ">
               <div className="flex items-center gap-1 text-sm ">
                 <div className="relative">

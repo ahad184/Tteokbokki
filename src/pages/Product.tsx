@@ -1,15 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { fetchProducts } from "../feature/product/productsSlice";
-import { addToCart } from "../feature/cart/cartSlice";
+import { fetchProducts, Product as ProductType } from "../feature/product/productsSlice";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { RiGridLine } from "react-icons/ri";
 import { TfiLayoutListThumb } from "react-icons/tfi";
+import { CiHeart } from "react-icons/ci";
+import { useAuth, useUser } from "@clerk/clerk-react";
+import { removeFromWishlistDB } from "../feature/wishlist/wishlistSlice";
+
+import { usePersistence } from "../hooks/usePersistence";
 
 const Product: React.FC = () => {
+  const { user } = useUser();
+  const { getToken } = useAuth();
   const dispatch = useAppDispatch();
   const { products, loading } = useAppSelector((state) => state.products);
+  const wishlistItems = useAppSelector((state) => state.wishlist.items);
+
+  const {
+    handleAddToCart: addToCartWithPersistence,
+    handleToggleWishlist: toggleWishlistWithPersistence
+  } = usePersistence();
+
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedWeights, setSelectedWeights] = useState<string[]>([]);
@@ -71,8 +84,20 @@ const Product: React.FC = () => {
     );
   };
 
-  const handleAddToCart = (product: any) => {
-    dispatch(addToCart(product));
+  const handleAddToCart = async (product: ProductType) => {
+    await addToCartWithPersistence(product);
+  };
+
+  const handleToggleWishlist = async (product: ProductType) => {
+    const existing = wishlistItems.find(i => i.id === product.id);
+    if (user && existing) {
+      const token = await getToken();
+      if (token) {
+        dispatch(removeFromWishlistDB({ id: existing._dbId as string, token }));
+      }
+    } else {
+      await toggleWishlistWithPersistence(product);
+    }
   };
 
   // Filtering logic
@@ -312,15 +337,29 @@ const Product: React.FC = () => {
                       {/* Product Image */}
 
                       <div className=" relative border rounded-md bg-gray-100 p-6 h-56 flex  justify-center">
+                        {product.stock <= 0 && (
+                          <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+                            Out of Stock
+                          </div>
+                        )}
                         <img
                           src={product.image}
                           alt={product.name}
-                          className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-300"
+                          className={`max-h-full max-w-full object-contain transition-transform duration-300 ${product.stock > 0 ? 'group-hover:scale-110' : 'opacity-50'}`}
                         />
-                        <div className="cursor-pointer bg-gray-100 absolute p-1 -bottom-3 border rounded-full">
+                        <div className="group cursor-pointer bg-white absolute p-1.5 -bottom-3 border rounded-full flex gap-2 shadow-sm hover:shadow-md transition">
                           <MdOutlineShoppingBag
-                            className="text-base text-[#64B496]"
-                            onClick={() => handleAddToCart(product)}
+                            className={`text-lg transition ${product.stock <= 0 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-600 hover:text-red-500'}`}
+                            onClick={() => {
+                              if (product.stock > 0) handleAddToCart(product);
+                              else window.alert("This product is out of stock.");
+                            }}
+                            title="Add to Cart"
+                          />
+                          <CiHeart
+                            className={`text-lg transition ${wishlistItems.find(i => i.id === product.id) ? 'text-red-500 fill-current' : 'text-gray-600 hover:text-red-500'}`}
+                            onClick={() => handleToggleWishlist(product)}
+                            title="Add to Wishlist"
                           />
                         </div>
                       </div>

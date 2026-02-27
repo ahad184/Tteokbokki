@@ -1,8 +1,8 @@
 import React from "react";
 import { FiTrash2 } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from "../app/hooks";
-import { removeFromCart, updateQuantity } from "../feature/cart/cartSlice";
+import { useAppSelector } from "../app/hooks";
+import { usePersistence } from "../hooks/usePersistence";
 import Button from "../components/ui/Button";
 import PopularProducts from "../components/ui/PopularProducts";
 
@@ -11,14 +11,16 @@ const money = (n: number) => `$${Number(n).toFixed(2)}`;
 // Define the type for PopularProduct
 
 const Cart: React.FC = () => {
-  const dispatch = useAppDispatch();
+  const { handleRemoveFromCart, handleUpdateCartQuantity } = usePersistence();
   const navigate = useNavigate();
   const { items } = useAppSelector((state) => state.cart);
 
-  const handleRemove = (id: string) => dispatch(removeFromCart(id));
+  const handleRemove = async (id: string, dbId?: string) => {
+    handleRemoveFromCart(id, dbId);
+  };
 
-  const setQty = (id: string, quantity: number) => {
-    dispatch(updateQuantity({ id, quantity }));
+  const setQty = async (id: string, quantity: number, dbId?: string) => {
+    handleUpdateCartQuantity(id, quantity, dbId);
   };
 
   if (items.length === 0) {
@@ -75,9 +77,14 @@ const Cart: React.FC = () => {
                       className="h-full w-full object-contain"
                     />
                   </div>
-                  <p className="truncate text-sm font-medium text-slate-700">
-                    {item.name}
-                  </p>
+                  <div className="flex flex-col">
+                    <p className="truncate text-sm font-medium text-slate-700">
+                      {item.name}
+                    </p>
+                    {item.stock === 0 && (
+                      <span className="text-red-500 text-xs font-bold mt-1">Out of Stock</span>
+                    )}
+                  </div>
                 </div>
 
                 <div className="text-center text-sm text-slate-700">
@@ -88,9 +95,10 @@ const Cart: React.FC = () => {
                   <div className="flex items-center overflow-hidden rounded-md border border-slate-200 bg-white">
                     <button
                       type="button"
-                      onClick={() => setQty(item.id, item.quantity + 1)}
-                      className="px-3 py-2 text-sm hover:bg-slate-50"
+                      onClick={() => setQty(item.id, item.quantity + 1, item._dbId)}
+                      className={`px-3 py-2 text-sm hover:bg-slate-50 ${item.quantity >= item.stock ? 'opacity-50 cursor-not-allowed' : ''}`}
                       aria-label="Increase quantity"
+                      disabled={item.quantity >= item.stock}
                     >
                       +
                     </button>
@@ -101,7 +109,13 @@ const Cart: React.FC = () => {
 
                     <button
                       type="button"
-                      onClick={() => setQty(item.id, item.quantity - 1)}
+                      onClick={() => {
+                        if (item.quantity - 1 === 0) {
+                          handleRemove(item.id, item._dbId);
+                        } else {
+                          setQty(item.id, item.quantity - 1, item._dbId);
+                        }
+                      }}
                       className="px-3 py-2 text-sm hover:bg-slate-50"
                       aria-label="Decrease quantity"
                     >
@@ -118,7 +132,7 @@ const Cart: React.FC = () => {
                 <div className="flex justify-end">
                   <button
                     type="button"
-                    onClick={() => handleRemove(item.id)}
+                    onClick={() => handleRemove(item.id, item._dbId)}
                     className="text-slate-600 hover:text-[#ff4c3b]"
                     aria-label="Remove item"
                   >
@@ -138,13 +152,25 @@ const Cart: React.FC = () => {
             Continue Shopping
           </Link>
 
-          <button
-            type="button"
-            onClick={() => navigate("/checkout")}
-            className="rounded-md bg-[#ff4c3b] px-10 py-3 text-sm font-semibold text-white hover:bg-[#e63f2f]"
-          >
-            Check Out
-          </button>
+          <div className="flex flex-col items-end">
+            {items.some(item => item.stock === 0) && (
+              <p className="text-red-500 text-sm mb-2 font-semibold">Please remove out-of-stock items before checkout.</p>
+            )}
+            <button
+              type="button"
+              onClick={() => {
+                if (items.some(item => item.stock === 0)) {
+                  window.alert("Please remove out of stock items from your cart.");
+                  return;
+                }
+                navigate("/checkout");
+              }}
+              className={`rounded-md bg-[#ff4c3b] px-10 py-3 text-sm font-semibold text-white hover:bg-[#e63f2f] ${items.some(item => item.stock === 0) ? 'opacity-50 cursor-not-allowed' : ''}`}
+              disabled={items.some(item => item.stock === 0)}
+            >
+              Check Out
+            </button>
+          </div>
         </div>
 
         <div className="mt-16">

@@ -1,0 +1,11 @@
+
+> ecommerce-app@0.0.0 lint
+> eslint . --report-unused-disable-directives --max-warnings 0
+
+
+C:\Users\HP\OneDrive\Desktop\Tteokbokki\client\src\App.tsx
+  123:6  warning  React Hook React.useEffect has a missing dependency: 'syncUser'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+✖ 1 problem (0 errors, 1 warning)
+
+ESLint found too many warnings (maximum: 0).

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../app/hooks';
-import { addToCart } from '../../feature/cart/cartSlice';
+import { usePersistence } from '../../hooks/usePersistence';
 
 interface Deal {
   id: string;
@@ -20,7 +19,6 @@ interface DealsOfTheDayProps {
 }
 
 const DealsOfTheDay: React.FC<DealsOfTheDayProps> = ({ deals }) => {
-  const dispatch = useAppDispatch();
 
   // Default deals data
   const defaultDeals: Deal[] = [
@@ -72,7 +70,9 @@ const DealsOfTheDay: React.FC<DealsOfTheDayProps> = ({ deals }) => {
 
   const displayDeals = deals || defaultDeals;
 
-  const handleAddToCart = (deal: Deal) => {
+  const { handleAddToCart: addToCartWithPersistence } = usePersistence();
+
+  const handleAddToCart = async (deal: Deal) => {
     const cartItem = {
       id: deal.id,
       name: deal.name,
@@ -83,7 +83,7 @@ const DealsOfTheDay: React.FC<DealsOfTheDayProps> = ({ deals }) => {
       rating: deal.rating,
       stock: 100,
     };
-    dispatch(addToCart(cartItem));
+    await addToCartWithPersistence(cartItem);
   };
 
   return (
