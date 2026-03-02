@@ -1,5 +1,6 @@
 export interface Product {
   id: string;
+  _id?: string;
   name: string;
   description: string;
   price: number;
@@ -7,6 +8,7 @@ export interface Product {
   category: string;
   stock: number;
   rating?: number;
+  _dbId?: string;
 }
 
 export interface CartItem extends Product {

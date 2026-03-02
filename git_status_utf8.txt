@@ -1,0 +1,18 @@
+﻿On branch staging
+Your branch is up to date with 'origin/staging'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   src/pages/Product.tsx
+	modified:   src/pages/ProductDetail.tsx
+	modified:   src/pages/Wishlist.tsx
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	build_errors_v2.txt
+	build_errors_v2_utf8.txt
+	final_build_v2.txt
+	git_status.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")

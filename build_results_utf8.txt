@@ -1,0 +1,9 @@
+﻿
+> ecommerce-app@0.0.0 build
+> tsc && vite build
+
+src/pages/Blog.tsx(2,1): error TS6133: 'AiOutlineInstagram' is declared but its value is never read.
+src/pages/Blog.tsx(3,1): error TS6192: All imports in import declaration are unused.
+src/pages/Blog.tsx(11,10): error TS6133: 'currentPage' is declared but its value is never read.
+src/pages/Blog.tsx(11,23): error TS6133: 'setCurrentPage' is declared but its value is never read.
+src/pages/Blog.tsx(12,9): error TS6133: 'totalPages' is declared but its value is never read.

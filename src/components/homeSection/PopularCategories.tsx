@@ -31,7 +31,7 @@ const PopularCategories = () => {
   ];
 
   return (
-    <Wrapper className="flex flex-col items-center justify-center gap-10 px-4 md:px-8 py-16">
+    <Wrapper className=" flex flex-col items-center justify-center gap-10 px-4 md:px-8 py-16">
       <p className="text-md uppercase font-bold text-red-600 tracking-wide">
         customer favorites
       </p>
@@ -40,7 +40,7 @@ const PopularCategories = () => {
         Popular Categories
       </h3>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 w-full max-w-6xl mt-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 w-full max-w-7xl mt-8">
         {categoriesInfo.map((cat, index) => (
           <div
             key={index}

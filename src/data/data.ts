@@ -31,27 +31,27 @@ export const HomePageData = {
       {
         title: 'Best prices & offers',
         description: 'Orders $50 or more',
-        image: '/newsletter/icon-1.png',
+        image: '/assets/newsletter/icon-1.png',
       },
       {
         title: 'Free delivery',
         description: '24/7 amazing services',
-        image: '/newsletter/icon-2.png',
+        image: '/assets/newsletter/icon-2.png',
       },
       {
         title: 'Great daily deal',
         description: 'When you sign up',
-        image: '/newsletter/icon-3.png',
+        image: '/assets/newsletter/icon-3.png',
       },
       {
         title: 'Wide assortment',
         description: 'Mega Discounts',
-        image: '/newsletter/icon-4.png',
+        image: '/assets/newsletter/icon-4.png',
       },
       {
         title: 'Easy returns',
         description: 'Within 30 days',
-        image: '/newsletter/icon-5.png',
+        image: '/assets/newsletter/icon-5.png',
       },
     ],
   },

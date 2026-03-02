@@ -1,18 +1,41 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
-import { MOCK_PRODUCTS } from '../utils/constant';
-import { useAppDispatch } from '../app/hooks';
-import { addToCart } from '../feature/cart/cartSlice';
-import { addToWishlist } from '../feature/wishlist/wishlistSlice';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { RootState } from '../app/store';
+import { fetchProducts, Product as ProductType } from '../feature/product/productsSlice';
+import { usePersistence } from '../hooks/usePersistence';
 
 const ProductDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [quantity, setQuantity] = useState(1);
 
-  const product = MOCK_PRODUCTS.find((p) => p.id === id);
+  const { products, loading } = useAppSelector((state: RootState) => state.products);
+
+  const [quantity, setQuantity] = useState(1);
+  const {
+    handleAddToCart: addToCartWithPersistence,
+    handleAddToWishlist: addToWishlistWithPersistence
+  } = usePersistence();
+
+  // 🔥 Fetch products if page refreshed
+  useEffect(() => {
+    if (products.length === 0) {
+      dispatch(fetchProducts());
+    }
+  }, [dispatch, products.length]);
+
+  // 🔥 IMPORTANT: match correct id field
+  const product = products.find((p: ProductType) => p.id === id);
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-16 text-center">
+        <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-red-500"></div>
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -23,14 +46,14 @@ const ProductDetails: React.FC = () => {
     );
   }
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     for (let i = 0; i < quantity; i++) {
-      dispatch(addToCart(product));
+      await addToCartWithPersistence(product);
     }
   };
 
-  const handleAddToWishlist = () => {
-    dispatch(addToWishlist(product));
+  const handleAddToWishlist = async () => {
+    await addToWishlistWithPersistence(product);
   };
 
   return (
@@ -56,6 +79,7 @@ const ProductDetails: React.FC = () => {
         {/* Product Info */}
         <div>
           <div className="text-sm text-gray-500 mb-2">{product.category}</div>
+
           <h1 className="text-4xl font-bold mb-4">{product.name}</h1>
 
           <div className="flex items-center mb-4">
@@ -90,27 +114,36 @@ const ProductDetails: React.FC = () => {
             <div className="flex items-center border rounded-lg">
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="px-4 py-2 hover:bg-gray-100"
+                className={`px-4 py-2 hover:bg-gray-100 ${product.stock === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                disabled={product.stock === 0}
               >
                 -
               </button>
-              <span className="px-6 py-2 border-x">{quantity}</span>
+              <span className="px-6 py-2 border-x">{product.stock === 0 ? 0 : quantity}</span>
               <button
                 onClick={() =>
                   setQuantity(Math.min(product.stock, quantity + 1))
                 }
-                className="px-4 py-2 hover:bg-gray-100"
+                className={`px-4 py-2 hover:bg-gray-100 ${product.stock === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                disabled={product.stock === 0}
               >
                 +
               </button>
             </div>
           </div>
 
+          {product.stock === 0 && (
+            <div className="text-red-500 font-semibold mb-6">
+              This product is out of stock.
+            </div>
+          )}
+
           {/* Action Buttons */}
           <div className="flex gap-4">
-            <Button size="lg" onClick={handleAddToCart} className="flex-1">
+            <Button size="lg" onClick={handleAddToCart} className={`flex-1 ${product.stock === 0 ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={product.stock === 0}>
               Add to Cart
             </Button>
+
             <Button size="lg" variant="outline" onClick={handleAddToWishlist}>
               ❤️ Wishlist
             </Button>

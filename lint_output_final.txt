@@ -1,0 +1,6 @@
+﻿
+C:\Users\HP\OneDrive\Desktop\Tteokbokki\client\src\App.tsx
+  18:9  warning  The 'syncUser' function makes the dependencies of useEffect Hook (at line 68) change on every render. Move it inside the useEffect callback. Alternatively, wrap the definition of 'syncUser' in its own useCallback() Hook  react-hooks/exhaustive-deps
+
+Γ£û 1 problem (0 errors, 1 warning)
+

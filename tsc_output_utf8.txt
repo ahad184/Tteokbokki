@@ -1,0 +1,2 @@
+﻿src/pages/ProductDetail.tsx(6,10): error TS2724: '"../feature/wishlist/wishlistSlice"' has no exported member named 'addToWishlist'. Did you mean 'addToWishlistDB'?
+src/pages/Wishlist.tsx(4,10): error TS2724: '"../feature/wishlist/wishlistSlice"' has no exported member named 'removeFromWishlist'. Did you mean 'removeFromWishlistDB'?
