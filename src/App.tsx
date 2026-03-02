@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, FC } from "react";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import AppRoutes from "./routes/AppRoutes";
@@ -17,7 +17,7 @@ import {
 } from "./feature/wishlist/wishlistSlice";
 
 
-const App: React.FC = () => {
+const App: FC = () => {
   const { user } = useUser();
   const { getToken } = useAuth();
   const dispatch = useAppDispatch();
@@ -127,7 +127,7 @@ const App: React.FC = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const userId = user?.id || null;
     dispatch(switchCartIdentity(userId));
     dispatch(switchWishlistIdentity(userId));
@@ -138,7 +138,7 @@ const App: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, dispatch]);
 
- 
+
 
   return (
     <div className="flex flex-col min-h-screen">

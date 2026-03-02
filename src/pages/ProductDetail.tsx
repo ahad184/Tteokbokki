@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { fetchProducts } from '../feature/product/productsSlice';
+import { RootState } from '../app/store';
+import { fetchProducts, Product as ProductType } from '../feature/product/productsSlice';
 import { usePersistence } from '../hooks/usePersistence';
 
 const ProductDetails: React.FC = () => {
@@ -10,7 +11,7 @@ const ProductDetails: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { products, loading } = useAppSelector((state) => state.products);
+  const { products, loading } = useAppSelector((state: RootState) => state.products);
 
   const [quantity, setQuantity] = useState(1);
   const {
@@ -26,7 +27,7 @@ const ProductDetails: React.FC = () => {
   }, [dispatch, products.length]);
 
   // 🔥 IMPORTANT: match correct id field
-  const product = products.find((p) => p.id === id);
+  const product = products.find((p: ProductType) => p.id === id);
 
   if (loading) {
     return (

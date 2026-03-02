@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { RootState } from "../app/store";
 import { fetchProducts, Product as ProductType } from "../feature/product/productsSlice";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { RiGridLine } from "react-icons/ri";
@@ -15,8 +16,8 @@ const Product: React.FC = () => {
   const { user } = useUser();
   const { getToken } = useAuth();
   const dispatch = useAppDispatch();
-  const { products, loading } = useAppSelector((state) => state.products);
-  const wishlistItems = useAppSelector((state) => state.wishlist.items);
+  const { products, loading } = useAppSelector((state: RootState) => state.products);
+  const wishlistItems = useAppSelector((state: RootState) => state.wishlist.items);
 
   const {
     handleAddToCart: addToCartWithPersistence,
@@ -102,15 +103,15 @@ const Product: React.FC = () => {
 
   // Filtering logic
   const filteredProducts = products
-    .filter((p) => p.price >= priceRange[0] && p.price <= priceRange[1])
+    .filter((p: ProductType) => p.price >= priceRange[0] && p.price <= priceRange[1])
     .filter(
-      (p) =>
+      (p: ProductType) =>
         selectedCategories.length === 0 ||
         selectedCategories.includes(p.category),
     )
     // .filter((p) => selectedWeights.length === 0 || selectedWeights.includes(p.weight))
     .filter(
-      (p) =>
+      (p: ProductType) =>
         selectedTags.length === 0 ||
         selectedTags.some((tag) => p.tags?.includes(tag)),
     );

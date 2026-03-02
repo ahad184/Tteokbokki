@@ -1,19 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../app/hooks';
+import { RootState } from '../app/store';
 import { usePersistence } from '../hooks/usePersistence';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 
 const Wishlist: React.FC = () => {
   const { handleAddToCart, handleRemoveFromWishlist } = usePersistence();
-  const wishlistItems = useAppSelector((state) => state.wishlist.items);
+  const wishlistItems = useAppSelector((state: RootState) => state.wishlist.items);
 
   const handleRemove = async (id: string, dbId?: string) => {
     handleRemoveFromWishlist(id, dbId);
   };
 
-  const onAddToCart = async (product: (typeof wishlistItems)[0]) => {
+  const onAddToCart = async (product: any) => {
     await handleAddToCart(product);
     handleRemoveFromWishlist(product.id, product._dbId);
   };
@@ -37,7 +38,7 @@ const Wishlist: React.FC = () => {
       <h1 className="text-4xl font-bold mb-8">My Wishlist</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {wishlistItems.map((item) => (
+        {wishlistItems.map((item: any) => (
           <Card key={item.id}>
             <img
               src={item.image}
