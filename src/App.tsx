@@ -7,8 +7,15 @@ import { API_BASE_URL } from "./config/api";
 
 import { useUser, useAuth } from "@clerk/clerk-react";
 import { useAppDispatch } from "./app/hooks";
-import { fetchCart, switchIdentity as switchCartIdentity } from "./feature/cart/cartSlice";
-import { fetchWishlist, switchIdentity as switchWishlistIdentity } from "./feature/wishlist/wishlistSlice";
+import {
+  fetchCart,
+  switchIdentity as switchCartIdentity,
+} from "./feature/cart/cartSlice";
+import {
+  fetchWishlist,
+  switchIdentity as switchWishlistIdentity,
+} from "./feature/wishlist/wishlistSlice";
+
 
 const App: React.FC = () => {
   const { user } = useUser();
@@ -22,7 +29,7 @@ const App: React.FC = () => {
 
     try {
       // Sync Cart
-      const guestCart = localStorage.getItem('cart_guest');
+      const guestCart = localStorage.getItem("cart_guest");
       if (guestCart) {
         const { items } = JSON.parse(guestCart);
         for (const item of items) {
@@ -34,17 +41,22 @@ const App: React.FC = () => {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ productId: item.id, quantity: item.quantity }),
+              body: JSON.stringify({
+                productId: item.id,
+                quantity: item.quantity,
+              }),
             });
           } else {
-            console.warn(`Skipping sync for mock product: ${item.name} (${item.id})`);
+            console.warn(
+              `Skipping sync for mock product: ${item.name} (${item.id})`,
+            );
           }
         }
-        localStorage.removeItem('cart_guest');
+        localStorage.removeItem("cart_guest");
       }
 
       // Sync Wishlist
-      const guestWishlist = localStorage.getItem('wishlist_guest');
+      const guestWishlist = localStorage.getItem("wishlist_guest");
       if (guestWishlist) {
         const { items } = JSON.parse(guestWishlist);
         for (const item of items) {
@@ -59,10 +71,12 @@ const App: React.FC = () => {
               body: JSON.stringify({ productId: item.id }),
             });
           } else {
-            console.warn(`Skipping sync for mock wishlist product: ${item.name} (${item.id})`);
+            console.warn(
+              `Skipping sync for mock wishlist product: ${item.name} (${item.id})`,
+            );
           }
         }
-        localStorage.removeItem('wishlist_guest');
+        localStorage.removeItem("wishlist_guest");
       }
 
       sessionStorage.setItem(`guest_synced_${user.id}`, "true");
@@ -124,32 +138,12 @@ const App: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, dispatch]);
 
+ 
+
   return (
     <div className="flex flex-col min-h-screen">
       <Topbar />
       <Navbar />
-
-      <div className="flex justify-end p-4 gap-3 items-center">
-        {/* {!user && (
-          <Link to="/signup">
-            <button className="bg-blue-600 text-white px-4 py-2 rounded">
-              Login
-            </button>
-          </Link>
-        )} */}
-
-        {/* {user && (
-          <>
-            <p className="font-semibold">Hi, {user.firstName}</p>
-
-            <SignOutButton>
-              <button className="bg-red-500 text-white px-4 py-2 rounded">
-                Logout
-              </button>
-            </SignOutButton>
-          </>
-        )} */}
-      </div>
 
       <main className="flex-grow">
         <AppRoutes />

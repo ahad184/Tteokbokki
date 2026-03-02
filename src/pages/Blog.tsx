@@ -1,197 +1,177 @@
-import React, { useState } from "react";
-import { AiOutlineInstagram } from "react-icons/ai";
-import { RiFacebookLine, RiLinkedinLine, RiTwitterXLine } from "react-icons/ri";
-
-import { TbArrowBigRightFilled } from "react-icons/tb";
+import React, { useEffect, useState } from "react";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { client } from "../contentful/client";
 
 const BlogPage: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const totalPages = 3;
+  const [blog, setBlog] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        setLoading(true);
+        const res = await client.getEntries({
+          content_type: "blog",
+          limit: 2,
+        });
+
+        if (res.items && res.items.length > 0) {
+          setBlog(res.items[0].fields);
+        } else {
+          setError("No blog posts found.");
+        }
+      } catch (err: any) {
+        console.error("Contentful fetch error:", err);
+        setError("Failed to load blog post. Please check your connection.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlog();
+  }, []);
+
+  // Safely format date
+  const formatDate = (dateStr: any) => {
+    try {
+      if (!dateStr) return null;
+      const d = new Date(dateStr);
+      if (isNaN(d.getTime())) return "Invalid Date";
+      return d.toLocaleDateString(undefined, { dateStyle: "long" });
+    } catch (e) {
+      return "Date Error";
+    }
+  };
+
+  // Helper to render content safely (handles both Rich Text objects and plain strings)
+  const renderContent = (content: any) => {
+    try {
+      if (!content) return <p>No content available.</p>;
+
+      // If it's a Contentful Rich Text object (has nodeType)
+      if (typeof content === "object" && content.nodeType === "document") {
+        return documentToReactComponents(content);
+      }
+
+      // If it's a plain string or other format
+      if (typeof content === "string") {
+        return <p className="whitespace-pre-wrap">{content}</p>;
+      }
+
+      return <p>Content format not supported.</p>;
+    } catch (err) {
+      console.error("Render content error:", err);
+      return <p className="text-red-500">Error rendering content.</p>;
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[400px] text-lg">
+        <div className="animate-pulse text-red-600 font-medium tracking-wide">
+          Loading blog...
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !blog) {
+    return (
+      <div className="flex flex-col justify-center items-center min-h-[400px] text-lg gap-6 px-4 text-center">
+        <p className="text-gray-500 font-medium max-w-md">
+          {error || "Blog content is currently unavailable."}
+        </p>
+        <button
+          onClick={() => window.location.reload()}
+          className="px-8 py-3 bg-red-600 text-white rounded-full hover:bg-red-700 shadow-lg transition-all duration-300 transform hover:scale-105"
+        >
+          Try Again
+        </button>
+      </div>
+    );
+  }
+
+  // Debug log for final render state (visible in console)
+  console.log("Rendering BlogPage with data:", blog);
 
   return (
-    <>
-      {/* Header */}
-      <div className="w-full bg-red-600 text-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 text-sm lg:px-0">
-          <span className="font-medium">Blog Details</span>
-          <span className="text-xs opacity-90">
-            Home <span className="mx-1">–</span> Blog Details
+    <div className="min-h-screen bg-white">
+      <div className="w-full bg-red-600 text-white shadow-md">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 text-sm lg:px-0">
+          <span className="font-bold tracking-tight">Blog Details</span>
+          <span className="text-xs opacity-80 font-medium">
+            Home <span className="mx-1 text-red-300">/</span> Blog Details
           </span>
         </div>
       </div>
-      <div className="max-w-6xl mx-auto px-4 py-10">
-        {/* Hero Image */}
-        <div className="w-full overflow-hidden rounded-2xl">
-          <img
-            src="./assets/blog/blog2.png"
-            alt="Food"
-            className="w-full h-[420px] object-cover"
-          />
-        </div>
 
-        {/* Meta */}
-        <div className="mt-6 text-sm text-gray-500">
-          <span className="text-red-500 font-medium">By Admin</span> / 07
-          Comment / Date - 11, 02, 2026
-        </div>
+      <div className="max-w-6xl mx-auto px-4 py-12">
+        <div className="max-w-4xl mx-auto">
+          {/* Main Post Image */}
+          {blog.coverImage?.fields?.file?.url && (
+            <div className="w-full overflow-hidden rounded-3xl shadow-2xl mb-10">
+              <img
+                src={
+                  blog.coverImage.fields.file.url.startsWith("//")
+                    ? `https:${blog.coverImage.fields.file.url}`
+                    : blog.coverImage.fields.file.url
+                }
+                alt={blog.title || "Blog cover"}
+                className="w-full h-[300px] md:h-[480px] object-cover"
+              />
+            </div>
+          )}
 
-        {/* Title */}
-        <h1 className="mt-3 text-3xl font-bold text-gray-900">
-          Health Benefits of a Raw food
-        </h1>
+          {/* Metadata */}
+          <div className="flex items-center gap-4 text-sm text-gray-400 mb-4 font-medium uppercase tracking-widest">
+            <span className="text-red-500">
+              By {blog.authorName || "Admin"}
+            </span>
+            <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+            {blog.publishedDate && (
+              <span>{formatDate(blog.publishedDate)}</span>
+            )}
+          </div>
 
-        {/* Content */}
-        <div className="mt-4 space-y-4 text-gray-600 leading-relaxed">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde
-            mollitia nihil sunt reprehenderit natus, soluta officia iure enim
-            itaque, iste qui exercitationem et odit beatae debitis ratione
-            molestiae quis atque.
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed
-            doloribus dolor odio nobis cum voluptatem laudantium magni veritatis
-            sint! Aspernatur et quisquam modi laudantium.
-          </p>
-        </div>
+          {/* Title */}
+          <h1 className="text-3xl md:text-5xl font-black text-gray-900 leading-tight mb-8">
+            {blog.title || "Untitled Blog Post"}
+          </h1>
 
-        {/* Two Cards */}
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Card 1 */}
-          <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-            <img
-              src="./assets/blog/blog3.png"
-              alt="Green Juice"
-              className="w-full h-56 object-cover"
-            />
-            <div className="p-5">
-              <p className="flex items-start gap-2 text-gray-600">
-                <span className="mt-1 flex items-center">
-                  <TbArrowBigRightFilled className="text-[17px] bg-red-500 text-white rounded-full p-[2px]" />
+          {/* Content Body */}
+          <div className="mt-8 space-y-6 text-gray-700 text-lg leading-relaxed prose prose-red max-w-none">
+            {renderContent(blog.content)}
+          </div>
+
+          {/* Tags */}
+          {Array.isArray(blog.tags) && blog.tags.length > 0 && (
+            <div className="mt-12 pt-8 border-t border-gray-100 flex gap-2 flex-wrap">
+              {blog.tags.map((tag: string) => (
+                <span
+                  key={tag}
+                  className="px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full bg-gray-50 text-gray-500"
+                >
+                  #{tag}
                 </span>
-                Lorem ipsum dolor consectetur adipisicing elit. Molestias,
-                dolorum!
+              ))}
+            </div>
+          )}
+
+          {/* Author */}
+          {(blog.authorBio || blog.authorName) && (
+            <div className="mt-16 bg-gray-50 rounded-3xl p-8 border border-gray-100">
+              <h3 className="text-xl font-bold text-gray-900 mb-2">
+                {blog.authorName || "Anonymous Writer"}
+              </h3>
+              <p className="text-gray-600 italic leading-relaxed">
+                {blog.authorBio}
               </p>
             </div>
-          </div>
-
-          {/* Card 2 */}
-          <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-            <img
-              src="./assets/blog/blog1.png"
-              alt="Healthy Food"
-              className="w-full h-56 object-cover"
-            />
-            <div className="p-5">
-              <p className="flex items-start gap-2 text-gray-600">
-                <span className="mt-1 flex items-center">
-                  <TbArrowBigRightFilled className="text-[17px] bg-red-500 text-white rounded-full p-[2px]" />
-                </span>
-                Lorem ipsum dolor consectetur adipisicing elit. Molestias,
-                dolorum!
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Author */}
-        <div className="mt-10 flex flex-col border p-6   rounded-2xl">
-          <div>
-            <p className="text-sm text-gray-600 mt-1">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Asperiores officiis magni explicabo fuga molestiae.Lorem ipsum
-              dolor sit amet consectetur adipisicing elit. Asperiores officiis
-              magni explicabo fuga molestiae.
-            </p>
-          </div>
-          <div className="flex justify-between items-center">
-            <h3 className="font-bold text-red-500">John martin</h3>
-            <button className="h-10 w-10 flex items-center justify-center rounded-full text-red-500  hover:text-white transition">
-              <img src="./assets/blog/Vector.png" alt="" />
-            </button>
-          </div>
-        </div>
-        <div>
-          <p className="text-sm text-[#7A7A7A] mt-7">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-            officiis magni explicabo fuga molestiae.Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Asperiores officiis magni explicabo
-            fuga molestiae.
-          </p>
-        </div>
-        {/* Tags & Pagination */}
-        <div className="mt-5 flex flex-col border py-3 pl-3 md:flex-row md:items-center md:justify-between  gap-6">
-          <div className="flex gap-3">
-            {["Cabbage", "Appetizer", "Meat Food"].map((tag) => (
-              <span
-                key={tag}
-                className="px-4 py-1 text-sm rounded-sm border border-gray-200 text-gray-600"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-          <div className="flex gap-">
-            <button className="p-2  bg-white ">
-              <RiFacebookLine className="text-2xl border" />
-            </button>
-            <button className="p-2 bg-white ">
-              <RiTwitterXLine className="text-2xl border" />
-            </button>
-            <button className="p-2 bg-white ">
-              <RiLinkedinLine className="text-2xl border" />
-            </button>
-            <button className="p-2 bg-white ">
-              <AiOutlineInstagram className="text-2xl border" />
-            </button>
-          </div>
-        </div>
-        <div className="flex justify-center items-center  py-3">
-          {/* Previous */}
-          <button
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-            className={`px-3 py-1 border rounded
-      ${
-        currentPage === 1
-          ? "text-gray-400 cursor-not-allowed"
-          : "hover:bg-gray-100"
-      }
-    `}
-          >
-            Previous
-          </button>
-
-          {/* Page Numbers */}
-          {[1, 2, 3].map((page) => (
-            <button
-              key={page}
-              onClick={() => setCurrentPage(page)}
-              className={`px-3 py-1 border rounded
-        ${currentPage === page ? "bg-red-500 text-white" : "hover:bg-gray-100"}
-      `}
-            >
-              {page}
-            </button>
-          ))}
-
-          {/* Next */}
-          <button
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-            className={`px-3 py-1 border rounded
-      ${
-        currentPage === totalPages
-          ? "text-gray-400 cursor-not-allowed"
-          : "hover:bg-gray-100"
-      }
-    `}
-          >
-            Next
-          </button>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

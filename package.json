@@ -6,14 +6,16 @@
   "scripts": {
     "dev": "vite --host",
     "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.0.0",
+    "@contentful/rich-text-react-renderer": "^16.1.6",
     "@hookform/resolvers": "^5.2.2",
     "@reduxjs/toolkit": "^2.0.1",
     "axios": "^1.7.0",
+    "contentful": "^11.10.5",
     "lucide-react": "^0.563.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -34,6 +36,7 @@
     "eslint": "^8.57.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
+    "globals": "^17.4.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.19",
     "typescript": "^5.2.2",

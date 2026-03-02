@@ -1,0 +1,63 @@
+﻿
+> ecommerce-app@0.0.0 lint
+> eslint . --report-unused-disable-directives --max-warnings 0
+
+node.exe : 
+At C:\Program 
+Files\nodejs\npm.ps1:29 
+char:3
++   & $NODE_EXE 
+$NPM_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~
+    + CategoryInfo         
+     : NotSpecified    : 
+(:String) [], Rem    
+oteException
+    + FullyQualifiedErr    
+orId : NativeComman    
+dError
+ 
+Oops! Something went 
+wrong! :(
+
+ESLint: 8.57.1
+
+Error 
+[ERR_MODULE_NOT_FOUND]: 
+Cannot find package 
+'globals' imported from C:\
+Users\HP\OneDrive\Desktop\T
+teokbokki\client\eslint.con
+fig.js
+    at 
+Object.getPackageJSONURL (n
+ode:internal/modules/packag
+e_json_reader:256:9)
+    at packageResolve (node
+:internal/modules/esm/resol
+ve:768:81)
+    at moduleResolve (node:
+internal/modules/esm/resolv
+e:854:18)
+    at defaultResolve (node
+:internal/modules/esm/resol
+ve:984:11)
+    at ModuleLoader.default
+Resolve (node:internal/modu
+les/esm/loader:780:12)
+    at 
+#cachedDefaultResolve (node
+:internal/modules/esm/loade
+r:704:25)
+    at 
+ModuleLoader.resolve (node:
+internal/modules/esm/loader
+:687:38)
+    at ModuleLoader.getModu
+leJobForImport (node:intern
+al/modules/esm/loader:305:3
+8)
+    at ModuleJob._link (nod
+e:internal/modules/esm/modu
+le_job:137:49)

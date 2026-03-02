@@ -1,0 +1,5 @@
+﻿
+> ecommerce-app@0.0.0 build
+> tsc && vite build
+
+src/components/ui/PopularProducts.tsx(170,1): error TS1005: '}' expected.

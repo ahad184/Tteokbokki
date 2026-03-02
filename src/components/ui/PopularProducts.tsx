@@ -2,6 +2,7 @@ import React from "react";
 import { FiShoppingBag } from "react-icons/fi";
 import { usePersistence } from "../../hooks/usePersistence";
 
+
 const money = (n: number) => `$${Number(n).toFixed(2)}`;
 
 interface Popular {

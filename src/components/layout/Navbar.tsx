@@ -39,7 +39,10 @@ const Navbar: React.FC = () => {
               </button>
             </div>
           </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-6 mr-4">
+              <Link to="/blog" className="text-sm font-medium hover:text-red-500 transition-colors">
+                Blog
+              </Link>
               <SignedOut>
                 <Link to="/login" className="hover:text-red-500">
                   <div className="flex items-center gap-1">
